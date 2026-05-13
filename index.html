@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Curso de Análise Financeira | Método Kumon</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#F2EDE8;font-family:Georgia,serif;min-height:100vh}
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-track{background:#F0EBE5}
+  ::-webkit-scrollbar-thumb{background:#E8773A;border-radius:99px}
+  input[type=checkbox]{accent-color:#E8773A}
+  button{font-family:Georgia,serif}
+  @keyframes bounce-arrow{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+  @keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(232,119,58,0.5)}50%{box-shadow:0 0 0 8px rgba(232,119,58,0)}}
+  .kumon-arrow{display:inline-block;animation:bounce-arrow 0.8s ease-in-out infinite;margin-right:2px}
+  .kumon-tab-wrap{position:relative;display:inline-block}
+  .kumon-tab-wrap::after{content:"Clique aqui!";position:absolute;top:-26px;left:50%;transform:translateX(-50%);background:#E8773A;color:#FFF;font-size:9px;font-weight:700;padding:3px 8px;border-radius:99px;white-space:nowrap;animation:pulse-glow 1.5s ease-in-out infinite;font-family:Georgia,serif}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const{useState}=React;
+const MODULES=[{id:1,title:"Módulo 1",subtitle:"Conceitos Básicos",desc:"Relações, proporções, percentuais",emoji:"🔢",color:"#E8773A",lessons:[{title:"Proporções",content:"Uma proporção é a igualdade entre duas razões.
+3/1 = x/8 → x = 24 produtos"},{title:"Percentuais",content:"Percentual = (parte / total) × 100
+Desconto: R$200 com 15% off → R$170"},{title:"Cálculos",content:"Aumentar %: Valor × (1 + %)
+Reduzir %: Valor × (1 - %)"}],quiz:{question:"Produto R$400 com aumento de 25%. Novo preço?",options:["R$420","R$500","R$480","R$450"],correct:1,explanation:"R$400 × 1,25 = R$500 ✅"}},{id:2,title:"Módulo 2",subtitle:"Margem e Mark Up",desc:"Entenda a diferença essencial",emoji:"📊",color:"#D4692A",lessons:[{title:"Mark Up",content:"Mark Up = percentual SOBRE O CUSTO
+Preço = Custo × (1 + MU)"},{title:"Margem",content:"Margem = lucro SOBRE O PREÇO
+Margem = (Preço - Custo) / Preço × 100"},{title:"Conversão",content:"MU → Margem: MU/(1+MU)
+Margem → MU: Margem/(1-Margem)"}],quiz:{question:"Custo R$80, preço R$120. Qual a margem?",options:["50%","33,3%","40%","66,7%"],correct:1,explanation:"(120-80)/120 × 100 = 33,3% ✅"}},{id:3,title:"Módulo 3",subtitle:"Lucratividade e P&L",desc:"Análise de resultado",emoji:"💰",color:"#C45E25",lessons:[{title:"P&L (DRE)",content:"Receita Bruta
+(-) Impostos = Receita Líquida
+(-) CMV = Lucro Bruto
+(-) Despesas = EBITDA"},{title:"Lucratividade vs Rentabilidade",content:"LUCRATIVIDADE = Lucro/Receita × 100
+RENTABILIDADE = Lucro/Investimento × 100"},{title:"P&L real",content:"Receita: R$1.000.000
+Impostos 8%: R$80.000
+CMV 50%: R$500.000
+EBITDA: R$140.000 (14%)"}],quiz:{question:"Receita R$800k, Lucro R$64k. Lucratividade?",options:["6%","8%","10%","12%"],correct:1,explanation:"64k/800k = 8% ✅"}},{id:4,title:"Módulo 4",subtitle:"Margem de Contribuição",desc:"Custos fixos e variáveis",emoji:"⚖️",color:"#B85520",lessons:[{title:"Fixos vs Variáveis",content:"FIXOS: Aluguel, salários
+VARIÁVEIS: Comissão, frete, impostos"},{title:"Margem de Contribuição",content:"MC = Preço - Custos Variáveis
+Preço R$200 | Variáveis R$110 | MC = R$90"},{title:"Ponto de Equilíbrio",content:"PE = Custos Fixos / MC
+Fixos R$45k | MC R$90 → PE = 500 un"}],quiz:{question:"Fixos R$30k. MC R$75. PE?",options:["300 un.","400 un.","500 un.","600 un."],correct:1,explanation:"30.000/75 = 400 un ✅"}},{id:5,title:"Módulo 5",subtitle:"ROI e Payback",desc:"Retorno sobre investimento",emoji:"📈",color:"#E8773A",lessons:[{title:"ROI",content:"ROI = (Ganho - Investimento)/Investimento × 100
+R$50k → R$70k | ROI = 40%"},{title:"Payback",content:"Payback = Investimento/Lucro Mensal
+R$120k / R$15k = 8 meses"},{title:"ROAS",content:"ROAS = Receita/Gasto Ads
+R$25k / R$5k = 5x"}],quiz:{question:"Investimento R$80k, lucro R$20k/mês. Payback?",options:["3 meses","4 meses","5 meses","6 meses"],correct:1,explanation:"80k/20k = 4 meses ✅"}},{id:6,title:"Módulo 6",subtitle:"Análise de Promoções",desc:"Impacto financeiro real",emoji:"🏷️",color:"#D4692A",lessons:[{title:"O perigo do desconto",content:"Margem 30%: Lucro R$30
+20% desconto → Lucro R$10 | Margem 12,5%!"},{title:"Volume compensatório",content:"Vol = Volume × (M.original/M.nova)
+Desconto 20%, mg 40% → Vol × 2"},{title:"Tipos",content:"🔴 Desconto direto
+🟡 Leve 3 pague 2
+🟢 Combo/brinde
+🔵 Cashback"}],quiz:{question:"Margem 50%, desconto 25%. Quanto a mais vender?",options:["50% a mais","100% a mais","150% a mais","200% a mais"],correct:1,explanation:"100 × (50/25) = 200 un ✅"}},{id:7,title:"Módulo 7",subtitle:"Elasticidade de Preço",desc:"Aplicabilidade comercial",emoji:"🎯",color:"#C45E25",lessons:[{title:"O que é?",content:"E = %qtd / %preço
+|E|>1 → Elástico | |E|<1 → Inelástico"},{title:"Tipos",content:"ELÁSTICOS: Commodities, supérfluos
+INELÁSTICOS: Medicamentos, exclusivos"},{title:"Na prática",content:"Elástico: desconto aumenta receita
+Inelástico: reajuste gera mais receita"}],quiz:{question:"Preço +10%, vendas -5%. O produto é:",options:["Elástico","Inelástico","Unitário","Sem elasticidade"],correct:1,explanation:"|E|=5/10=0,5 → Inelástico ✅"}},{id:8,title:"Módulo 8",subtitle:"Precificação",desc:"Planejamento de preço",emoji:"🏪",color:"#B85520",lessons:[{title:"Métodos",content:"💰 Custo + Margem
+🏆 Valor Percebido
+⚔️ Competitiva"},{title:"Por canal",content:"Custo R$40 → Distrib R$60 → Varejo R$90 → Consumidor R$135"},{title:"Estratégias",content:"🚀 Skimming | 🎯 Penetração
+⚓ Ancoragem | 📦 Freemium"}],quiz:{question:"Lançar caro e reduzir com o tempo é:",options:["Penetração","Skimming","Freemium","Ancoragem"],correct:1,explanation:"Skimming ✅"}},{id:9,title:"Módulo 9",subtitle:"Market Share",desc:"Participação de mercado",emoji:"🌍",color:"#E8773A",lessons:[{title:"O que é?",content:"MS = (Vendas/Mercado) × 100
+Mercado R$2bi | Empresa R$300mi → MS=15%"},{title:"Como monitorar",content:"Nielsen, Kantar, IBGE
+SOM, SOV, SOD"},{title:"Estratégias",content:"📈 Expansão de distribuição
+💰 Cross-sell, up-sell
+⚔️ Conquistar concorrência"}],quiz:{question:"Mercado R$5bi. Empresa R$750mi. MS?",options:["12%","15%","18%","20%"],correct:1,explanation:"750/5000=15% ✅"}},{id:10,title:"Módulo 10",subtitle:"Dashboards",desc:"KPIs e visualização",emoji:"📉",color:"#D4692A",lessons:[{title:"KPIs",content:"💰 Receita, Ticket Médio, Margem
+📦 Volume, giro
+🎯 Win Rate, Churn, NPS"},{title:"Gráficos",content:"📊 Barras → comparação
+📈 Linhas → evolução
+🥧 Pizza → composição"},{title:"Dashboard",content:"✅ 7-10 indicadores
+✅ Hierarquia macro→detalhe
+✅ Semáforo 🟢🟡🔴"}],quiz:{question:"Gráfico ideal para evolução no tempo?",options:["Pizza","Barras","Linhas","Dispersão"],correct:2,explanation:"Linhas ✅"}},{id:11,title:"🎁 Bônus",subtitle:"Tributação",desc:"Essencial para negócios",emoji:"⚖️",color:"#8B3A1A",isBonus:true,lessons:[{title:"Regimes",content:"🟢 Simples: até R$4,8M
+🔵 Lucro Presumido: até R$78M
+🟠 Lucro Real: acima R$78M"},{title:"Impostos",content:"ICMS: 4-25%
+PIS/COFINS: 3,65-9,25%
+ISS: 2-5%"},{title:"Precificação",content:"Preço = Custo/(1-%imp-%mg)
+Ex: R$60/(1-0,12-0,20)=R$88,24"}],quiz:{question:"Custo R$50, impostos 10%, margem 20%. Preço?",options:["R$70,00","R$71,43","R$65,00","R$80,00"],correct:1,explanation:"50/0,70=R$71,43 ✅"}}];
+const KUMON_STEPS=[{id:"k1",nivel:"N1",emoji:"📖",title:"Leia a Aula Completa",desc:"Leia todas as aulas sem pular nada.",regra:"Não avance sem ler tudo.",color:"#E8773A"},{id:"k2",nivel:"N2",emoji:"✏️",title:"Copie as Fórmulas à Mão",desc:"Escreva cada fórmula em papel.",regra:"Escrever à mão ativa o cérebro.",color:"#D4692A"},{id:"k3",nivel:"N3",emoji:"🔁",title:"Refaça os Exemplos",desc:"Resolva com números diferentes.",regra:"Invente seus próprios números.",color:"#C45E25"},{id:"k4",nivel:"N4",emoji:"📝",title:"Quiz Sem Consultar",desc:"Responda sem olhar as aulas.",regra:"Kumon só avança quando acerta.",color:"#B85520"},{id:"k5",nivel:"N5",emoji:"🎯",title:"Aplique no Trabalho",desc:"Use o conceito em número real.",regra:"Aprendizado completo = vida real.",color:"#E8773A"},{id:"k6",nivel:"N6",emoji:"🌙",title:"Revisão Noturna",desc:"Releia as fórmulas antes de dormir.",regra:"O cérebro consolida no sono.",color:"#D4692A"},{id:"k7",nivel:"N7",emoji:"📅",title:"Repita 5 Dias",desc:"Estude o mesmo módulo por 5 dias.",regra:"Repetição é mais importante que volume.",color:"#C45E25"},{id:"k8",nivel:"N8",emoji:"🔄",title:"Revisão Semanal",desc:"Todo domingo, releia tudo.",regra:"Kumon revisa sempre.",color:"#B85520"},{id:"k9",nivel:"N9",emoji:"🏆",title:"Avance Só com 100%",desc:"Quiz + exemplo real sem travar.",regra:"80% não é suficiente.",color:"#8B3A1A"}];
+const DAILY=[{id:"d1",label:"Li a aula de hoje"},{id:"d2",label:"Escrevi as fórmulas à mão"},{id:"d3",label:"Refiz um exemplo com números meus"},{id:"d4",label:"Fiz o quiz sem consultar"},{id:"d5",label:"Apliquei no trabalho real"}];
+const ST={B:"backlog",D:"doing",X:"done"};
+const cols=[{key:ST.B,label:"📚 Backlog",color:"#6B6B6B",bg:"#F5F0EB",cnt:"#AAA"},{key:ST.D,label:"🚀 Praticando",color:"#E8773A",bg:"#FFF3EC",cnt:"#E8773A"},{key:ST.X,label:"✅ Dominei!",color:"#2D7A4F",bg:"#EDFAF3",cnt:"#2D7A4F"}];
+function App(){
+  const[tab,setTab]=useState("k");
+  const[mSt,setMSt]=useState(()=>Object.fromEntries(MODULES.map(m=>[m.id,ST.B])));
+  const[sSt,setSSt]=useState(()=>Object.fromEntries(KUMON_STEPS.map(s=>[s.id,ST.B])));
+  const[act,setAct]=useState(null);
+  const[li,setLi]=useState(0);
+  const[qa,setQa]=useState(null);
+  const[dc,setDc]=useState(()=>Object.fromEntries(DAILY.map(t=>[t.id,false])));
+  const[streak,setStreak]=useState(0);
+  const done=Object.values(mSt).filter(s=>s===ST.X).length;
+  const prog=Math.round((done/MODULES.length)*100);
+  const dd=Object.values(dc).filter(Boolean).length;
+  const gM={[ST.B]:MODULES.filter(m=>mSt[m.id]===ST.B),[ST.D]:MODULES.filter(m=>mSt[m.id]===ST.D),[ST.X]:MODULES.filter(m=>mSt[m.id]===ST.X)};
+  const gS={[ST.B]:KUMON_STEPS.filter(s=>sSt[s.id]===ST.B),[ST.D]:KUMON_STEPS.filter(s=>sSt[s.id]===ST.D),[ST.X]:KUMON_STEPS.filter(s=>sSt[s.id]===ST.X)};
+  const tog=(id)=>{const n={...dc,[id]:!dc[id]};setDc(n);if(Object.values(n).every(Boolean))setStreak(s=>s+1);};
+  const open=(mod)=>{setAct(mod);setLi(0);setQa(null);setTab("c");};
+  if(tab==="c"&&act){
+    const mod=act,inQ=li===mod.lessons.length,lesson=!inQ?mod.lessons[li]:null,ans=qa!==null,ok=qa===mod.quiz.correct;
+    return(<div style={{minHeight:"100vh",background:"#F2EDE8",fontFamily:"Georgia,serif"}}>
+      <div style={{background:"#1A1A1A",padding:"14px 18px",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12,flexWrap:"wrap"}}>
+        <button onClick={()=>setTab("k")} style={{background:"none",border:"1px solid #555",color:"#CCC",padding:"6px 12px",borderRadius:8,cursor:"pointer",fontSize:12}}>← Voltar</button>
+        <div style={{display:"flex",alignItems:"center",gap:10}}><span style={{fontSize:24}}>{mod.emoji}</span><div><div style={{fontWeight:800,fontSize:14,color:"#FFF"}}>{mod.title} — {mod.subtitle}</div><div style={{fontSize:10,color:"#E8773A"}}>{mod.desc}</div></div></div>
+        <div style={{display:"flex",gap:8}}>
+          {mSt[mod.id]!==ST.D&&mSt[mod.id]!==ST.X&&<button onClick={()=>setMSt(p=>({...p,[mod.id]:ST.D}))} style={{background:"#E8773A",color:"#FFF",border:"none",borderRadius:8,padding:"6px 12px",fontSize:11,fontWeight:700,cursor:"pointer"}}>🚀 Iniciar</button>}
+          {mSt[mod.id]!==ST.X&&<button onClick={()=>{setMSt(p=>({...p,[mod.id]:ST.X}));setTab("k");}} style={{background:"#2D7A4F",color:"#FFF",border:"none",borderRadius:8,padding:"6px 12px",fontSize:11,fontWeight:700,cursor:"pointer"}}>✅ Concluir</button>}
+        </div>
+      </div>
+      <div style={{background:"#FFF9F2",borderBottom:"2px solid #E8773A",padding:"8px 16px",fontSize:11,color:"#B85520",fontWeight:600}}>🇯🇵 Kumon: leia → escreva à mão → refaça → quiz sem consultar → aplique</div>
+      <div style={{display:"flex",gap:7,padding:"10px 14px",overflowX:"auto",background:"#FFF",borderBottom:"1px solid #E8E0D8"}}>
+        {mod.lessons.map((_,i)=>(<button key={i} onClick={()=>{setLi(i);setQa(null);}} style={{border:"2px solid "+mod.color,borderRadius:8,padding:"5px 14px",fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",background:li===i?mod.color:"#FFF",color:li===i?"#FFF":"#666"}}>Aula {i+1}</button>))}
+        <button onClick={()=>setLi(mod.lessons.length)} style={{border:"2px solid #2D7A4F",borderRadius:8,padding:"5px 14px",fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",background:inQ?"#2D7A4F":"#FFF",color:inQ?"#FFF":"#666"}}>📝 Quiz</button>
+      </div>
+      <div style={{background:"#FFF",borderRadius:13,margin:"14px",padding:20,boxShadow:"0 4px 16px rgba(0,0,0,0.08)"}}>
+        {!inQ?(<div>
+          <h2 style={{margin:"0 0 12px",fontSize:16,fontWeight:800,color:mod.color}}>{lesson.title}</h2>
+          <div style={{background:"#F9F5F1",borderRadius:10,padding:14}}>{lesson.content.split("\n").map((ln,i)=>(<p key={i} style={{margin:"3px 0",fontSize:13,lineHeight:1.7,color:"#333",fontFamily:"monospace"}}>{ln||" "}</p>))}</div>
+          <div style={{marginTop:16,background:"#FFF9F2",borderRadius:10,padding:12,border:"1px solid #F0D9C0"}}>
+            <div style={{fontSize:11,fontWeight:800,color:"#B85520",marginBottom:8}}>🇯🇵 Ficha Kumon:</div>
+            {DAILY.map(t=>(<label key={t.id} style={{display:"flex",alignItems:"center",gap:8,marginBottom:6,cursor:"pointer"}}><input type="checkbox" checked={!!dc[t.id]} onChange={()=>tog(t.id)} style={{width:15,height:15}}/><span style={{fontSize:12,color:dc[t.id]?"#2D7A4F":"#555",textDecoration:dc[t.id]?"line-through":"none"}}>{t.label}</span></label>))}
+          </div>
+          <div style={{display:"flex",gap:10,marginTop:14}}>
+            {li>0&&<button onClick={()=>setLi(li-1)} style={{background:"#F0EBE5",border:"none",borderRadius:9,padding:"8px 16px",fontSize:12,fontWeight:700,cursor:"pointer",color:"#555"}}>← Anterior</button>}
+            <button onClick={()=>setLi(li+1)} style={{background:mod.color,color:"#FFF",border:"none",borderRadius:9,padding:"8px 16px",fontSize:12,fontWeight:700,cursor:"pointer",marginLeft:"auto"}}>{li===mod.lessons.length-1?"Ir para o Quiz →":"Próxima →"}</button>
+          </div>
+        </div>):(<div>
+          <h2 style={{margin:"0 0 10px",fontSize:16,fontWeight:800,color:"#2D7A4F"}}>📝 Quiz</h2>
+          <p style={{fontSize:15,fontWeight:700,color:"#1A1A1A",marginBottom:14}}>{mod.quiz.question}</p>
+          <div style={{display:"flex",flexDirection:"column",gap:8}}>
+            {mod.quiz.options.map((opt,i)=>{let bg="#F8F4F0",brd="#DDD";if(ans){if(i===mod.quiz.correct){bg="#EDFAF3";brd="#2D7A4F"}else if(i===qa){bg="#FFF0F0";brd="#E84545"}}return<button key={i} onClick={()=>!ans&&setQa(i)} style={{border:"2px solid "+brd,background:bg,borderRadius:10,padding:"11px 14px",fontSize:13,textAlign:"left",cursor:ans?"default":"pointer",fontFamily:"Georgia,serif",width:"100%"}}><b style={{color:"#888",marginRight:10}}>{["A","B","C","D"][i]}</b>{opt}</button>;})}
+          </div>
+          {ans&&<div style={{display:"flex",gap:12,alignItems:"flex-start",border:"2px solid "+(ok?"#2D7A4F":"#E84545"),background:ok?"#EDFAF3":"#FFF0F0",borderRadius:12,padding:14,marginTop:14}}><span style={{fontSize:22}}>{ok?"🎉":"🔁"}</span><div><div style={{fontWeight:700,color:ok?"#2D7A4F":"#E84545"}}>{ok?"Correto! Pode avançar.":"Errou — releia a aula."}</div><div style={{fontSize:13,color:"#444",marginTop:3}}>{mod.quiz.explanation}</div></div></div>}
+          {ans&&ok&&<button onClick={()=>{setMSt(p=>({...p,[mod.id]:ST.X}));setTab("k");}} style={{background:"#2D7A4F",color:"#FFF",border:"none",borderRadius:9,padding:"10px 16px",fontSize:12,fontWeight:700,cursor:"pointer",marginTop:14,width:"100%"}}>✅ Concluído — Avançar</button>}
+          {ans&&!ok&&<button onClick={()=>{setLi(0);setQa(null);}} style={{background:"#E8773A",color:"#FFF",border:"none",borderRadius:9,padding:"10px 16px",fontSize:12,fontWeight:700,cursor:"pointer",marginTop:14,width:"100%"}}>🔁 Voltar para Aula 1</button>}
+        </div>)}
+      </div>
+    </div>);
+  }
+  return(<div style={{minHeight:"100vh",background:"#F2EDE8",fontFamily:"Georgia,serif"}}>
+    <div style={{background:"#1A1A1A",padding:"14px 18px",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12,flexWrap:"wrap"}}>
+      <div><h1 style={{margin:0,fontSize:18,fontWeight:800,color:"#FFF"}}>📊 Análise Financeira para Negócios</h1><div style={{fontSize:10,color:"#E8773A",marginTop:2}}>Método Kumon · {MODULES.length} módulos · +5.000 alunos</div></div>
+      <div><div style={{fontSize:10,color:"#CCC",marginBottom:4}}>{prog}% · {done}/{MODULES.length} módulos</div><div style={{height:7,background:"#444",borderRadius:99,width:170,overflow:"hidden"}}><div style={{height:"100%",background:"linear-gradient(90deg,#E8773A,#FFB347)",width:prog+"%",borderRadius:99,transition:"width 0.5s"}}/></div></div>
+    </div>
+    <div style={{display:"flex",gap:8,padding:"12px 14px",background:"#FFF",borderBottom:"1px solid #E8E0D8"}}>
+      <button onClick={()=>setTab("k")} style={{padding:"7px 13px",borderRadius:9,fontSize:11,fontWeight:700,cursor:"pointer",background:tab==="k"?"#E8773A":"transparent",color:tab==="k"?"#FFF":"#888",border:tab==="k"?"none":"1px solid #DDD"}}>📋 Módulos</button>
+      <span className={tab!=="km"?"kumon-tab-wrap":""}><button onClick={()=>setTab("km")} style={{padding:"7px 13px",borderRadius:9,fontSize:11,fontWeight:700,cursor:"pointer",background:tab==="km"?"#C45E25":"#FFF3EC",color:tab==="km"?"#FFF":"#C45E25",border:tab==="km"?"none":"2px solid #E8773A"}}>{tab!=="km"&&<span className="kumon-arrow">➜</span>}🇯🇵 Método Kumon</button></span>
+    </div>
+    {tab==="k"&&<div><div style={{display:"flex",gap:10,padding:"12px 10px",overflowX:"auto",alignItems:"flex-start"}}>
+      {cols.map(col=>(<div key={col.key} style={{minWidth:250,maxWidth:290,flex:"1 1 250px",borderRadius:13,padding:10,background:col.bg}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}><span style={{color:col.color,fontWeight:800,fontSize:12}}>{col.label}</span><span style={{background:col.cnt,color:"#FFF",fontSize:10,fontWeight:800,padding:"2px 7px",borderRadius:99}}>{gM[col.key].length}</span></div>
+        <div style={{display:"flex",flexDirection:"column",gap:9}}>
+          {gM[col.key].length===0&&<div style={{textAlign:"center",color:"#CCC",fontSize:11,padding:"16px 0"}}>Vazio</div>}
+          {gM[col.key].map(mod=>(<div key={mod.id} style={{background:"#FFF",borderRadius:11,padding:11,boxShadow:"0 2px 8px rgba(0,0,0,0.06)",border:"1px solid #EEE"}}>
+            <div style={{display:"flex",gap:9,alignItems:"center",marginBottom:7}}><span style={{width:32,height:32,background:mod.color,borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,flexShrink:0}}>{mod.emoji}</span><div style={{flex:1}}><div style={{fontWeight:800,fontSize:11,color:"#1A1A1A"}}>{mod.title}</div><div style={{fontSize:10,color:mod.color,fontWeight:700}}>{mod.subtitle}</div></div>{mod.isBonus&&<span style={{background:"#6B4C9A",color:"#FFF",fontSize:8,fontWeight:800,padding:"2px 5px",borderRadius:99}}>BÔNUS</span>}</div>
+            <p style={{fontSize:10,color:"#666",margin:"0 0 9px",lineHeight:1.5}}>{mod.desc}</p>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <button onClick={()=>open(mod)} style={{background:mod.color,color:"#FFF",border:"none",borderRadius:7,padding:"4px 10px",fontSize:10,fontWeight:700,cursor:"pointer"}}>{mSt[mod.id]===ST.X?"Revisar":"Estudar"}</button>
+              <div style={{display:"flex",gap:3}}>
+                {mSt[mod.id]!==ST.D&&mSt[mod.id]!==ST.X&&<button onClick={()=>setMSt(p=>({...p,[mod.id]:ST.D}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>🚀</button>}
+                {mSt[mod.id]!==ST.X&&<button onClick={()=>setMSt(p=>({...p,[mod.id]:ST.X}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>✅</button>}
+                {mSt[mod.id]!==ST.B&&<button onClick={()=>setMSt(p=>({...p,[mod.id]:ST.B}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>↩️</button>}
+              </div>
+            </div>
+          </div>))}
+        </div>
+      </div>))}
+    </div>{prog===100&&<div style={{textAlign:"center",background:"linear-gradient(135deg,#E8773A,#FFB347)",color:"#FFF",padding:"14px",borderRadius:12,margin:"0 12px 20px",fontWeight:800,fontSize:15}}>🎉 Parabéns! Você completou todos os módulos!</div>}</div>}
+    {tab==="km"&&<div style={{paddingBottom:40}}>
+      <div style={{background:"linear-gradient(135deg,#7A2E0A,#C45E25)",padding:"22px 18px",textAlign:"center"}}><div style={{fontSize:28,marginBottom:6}}>🇯🇵</div><h2 style={{margin:"0 0 6px",fontSize:17,fontWeight:800,color:"#FFF"}}>Método Kumon para TDAH</h2><p style={{margin:"0 auto 12px",fontSize:12,color:"rgba(255,255,255,0.88)",lineHeight:1.7,maxWidth:460}}>Criado por Toru Kumon nos anos 50.<br/><b>Estude todo dia · Domine antes de avançar · Repita até fixar.</b></p></div>
+      <div style={{background:"#FFF",padding:"16px",borderBottom:"1px solid #EEE"}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}><div><div style={{fontWeight:800,fontSize:14,color:"#1A1A1A"}}>📋 Ficha Diária</div></div><div style={{textAlign:"center"}}><div style={{fontSize:22,fontWeight:800,color:"#E8773A"}}>{streak}</div><div style={{fontSize:9,color:"#AAA",fontWeight:700}}>DIAS SEGUIDOS</div></div></div>
+        {DAILY.map(t=>(<label key={t.id} style={{display:"flex",alignItems:"center",gap:10,cursor:"pointer",background:dc[t.id]?"#EDFAF3":"#F9F5F1",borderRadius:8,padding:"8px 12px",border:"1px solid "+(dc[t.id]?"#2D7A4F":"#EEE"),marginBottom:6}}><input type="checkbox" checked={!!dc[t.id]} onChange={()=>tog(t.id)} style={{width:16,height:16,flexShrink:0}}/><span style={{fontSize:13,color:dc[t.id]?"#2D7A4F":"#444",fontWeight:dc[t.id]?700:400,textDecoration:dc[t.id]?"line-through":"none"}}>{t.label}</span>{dc[t.id]&&<span style={{marginLeft:"auto"}}>✅</span>}</label>))}
+        <div style={{marginTop:10,height:6,background:"#EEE",borderRadius:99,overflow:"hidden"}}><div style={{height:"100%",background:"linear-gradient(90deg,#E8773A,#2D7A4F)",width:((dd/DAILY.length)*100)+"%",borderRadius:99,transition:"width 0.4s"}}/></div>
+      </div>
+      <div style={{display:"flex",gap:10,padding:"8px 10px",overflowX:"auto",alignItems:"flex-start"}}>
+        {cols.map(col=>(<div key={col.key} style={{minWidth:250,maxWidth:290,flex:"1 1 250px",borderRadius:13,padding:10,background:col.bg}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}><span style={{color:col.color,fontWeight:800,fontSize:12}}>{col.label}</span><span style={{background:col.cnt,color:"#FFF",fontSize:10,fontWeight:800,padding:"2px 7px",borderRadius:99}}>{gS[col.key].length}</span></div>
+          <div style={{display:"flex",flexDirection:"column",gap:9}}>
+            {gS[col.key].length===0&&<div style={{textAlign:"center",color:"#CCC",fontSize:11,padding:"16px 0"}}>Vazio</div>}
+            {gS[col.key].map(step=>(<div key={step.id} style={{background:"#FFF",borderRadius:11,padding:11,boxShadow:"0 2px 8px rgba(0,0,0,0.06)",border:"1px solid #EEE"}}>
+              <div style={{display:"flex",gap:9,alignItems:"center",marginBottom:6}}><span style={{width:32,height:32,background:step.color,borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,flexShrink:0}}>{step.emoji}</span><div style={{flex:1}}><div style={{fontSize:8,fontWeight:800,color:"#AAA",letterSpacing:1}}>{step.nivel}</div><div style={{fontWeight:800,fontSize:11,color:"#1A1A1A"}}>{step.title}</div></div></div>
+              <p style={{fontSize:10,color:"#555",margin:"0 0 6px",lineHeight:1.5}}>{step.desc}</p>
+              <div style={{background:"#FFF9F2",borderRadius:7,padding:"6px 8px",marginBottom:8,fontSize:9,color:"#B85520",fontWeight:600}}>📌 {step.regra}</div>
+              <div style={{display:"flex",justifyContent:"flex-end",gap:3}}>
+                {sSt[step.id]!==ST.D&&sSt[step.id]!==ST.X&&<button onClick={()=>setSSt(p=>({...p,[step.id]:ST.D}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>🚀</button>}
+                {sSt[step.id]!==ST.X&&<button onClick={()=>setSSt(p=>({...p,[step.id]:ST.X}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>✅</button>}
+                {sSt[step.id]!==ST.B&&<button onClick={()=>setSSt(p=>({...p,[step.id]:ST.B}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>↩️</button>}
+              </div>
+            </div>))}
+          </div>
+        </div>))}
+      </div>
+    </div>}
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
