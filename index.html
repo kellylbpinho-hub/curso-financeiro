@@ -3,192 +3,1041 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Curso de Análise Financeira | Método Kumon</title>
+<title>Análise Financeira para Negócios | Método Japonês</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#F2EDE8;font-family:Georgia,serif;min-height:100vh}
-  ::-webkit-scrollbar{width:6px;height:6px}
-  ::-webkit-scrollbar-track{background:#F0EBE5}
-  ::-webkit-scrollbar-thumb{background:#E8773A;border-radius:99px}
-  input[type=checkbox]{accent-color:#E8773A}
-  button{font-family:Georgia,serif}
-  @keyframes bounce-arrow{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
-  @keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(232,119,58,0.5)}50%{box-shadow:0 0 0 8px rgba(232,119,58,0)}}
-  .kumon-arrow{display:inline-block;animation:bounce-arrow 0.8s ease-in-out infinite;margin-right:2px}
-  .kumon-tab-wrap{position:relative;display:inline-block}
-  .kumon-tab-wrap::after{content:"Clique aqui!";position:absolute;top:-26px;left:50%;transform:translateX(-50%);background:#E8773A;color:#FFF;font-size:9px;font-weight:700;padding:3px 8px;border-radius:99px;white-space:nowrap;animation:pulse-glow 1.5s ease-in-out infinite;font-family:Georgia,serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#F2EDE8;font-family:Georgia,serif;min-height:100vh}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:#F0EBE5}
+::-webkit-scrollbar-thumb{background:#E8773A;border-radius:99px}
+input[type=checkbox]{accent-color:#E8773A}
+input[type=number],input[type=text]{font-family:Georgia,serif}
+button{font-family:Georgia,serif}
+@keyframes bounce-in{0%{transform:scale(0.8);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.anim-in{animation:bounce-in 0.35s ease-out}
+.anim-shake{animation:shake 0.4s ease}
 </style>
 </head>
 <body>
 <div id="root"></div>
 <script type="text/babel">
-const{useState}=React;
-const MODULES=[{id:1,title:"Módulo 1",subtitle:"Conceitos Básicos",desc:"Relações, proporções, percentuais",emoji:"🔢",color:"#E8773A",lessons:[{title:"Proporções",content:"Uma proporção é a igualdade entre duas razões.
-3/1 = x/8 → x = 24 produtos"},{title:"Percentuais",content:"Percentual = (parte / total) × 100
-Desconto: R$200 com 15% off → R$170"},{title:"Cálculos",content:"Aumentar %: Valor × (1 + %)
-Reduzir %: Valor × (1 - %)"}],quiz:{question:"Produto R$400 com aumento de 25%. Novo preço?",options:["R$420","R$500","R$480","R$450"],correct:1,explanation:"R$400 × 1,25 = R$500 ✅"}},{id:2,title:"Módulo 2",subtitle:"Margem e Mark Up",desc:"Entenda a diferença essencial",emoji:"📊",color:"#D4692A",lessons:[{title:"Mark Up",content:"Mark Up = percentual SOBRE O CUSTO
-Preço = Custo × (1 + MU)"},{title:"Margem",content:"Margem = lucro SOBRE O PREÇO
-Margem = (Preço - Custo) / Preço × 100"},{title:"Conversão",content:"MU → Margem: MU/(1+MU)
-Margem → MU: Margem/(1-Margem)"}],quiz:{question:"Custo R$80, preço R$120. Qual a margem?",options:["50%","33,3%","40%","66,7%"],correct:1,explanation:"(120-80)/120 × 100 = 33,3% ✅"}},{id:3,title:"Módulo 3",subtitle:"Lucratividade e P&L",desc:"Análise de resultado",emoji:"💰",color:"#C45E25",lessons:[{title:"P&L (DRE)",content:"Receita Bruta
-(-) Impostos = Receita Líquida
-(-) CMV = Lucro Bruto
-(-) Despesas = EBITDA"},{title:"Lucratividade vs Rentabilidade",content:"LUCRATIVIDADE = Lucro/Receita × 100
-RENTABILIDADE = Lucro/Investimento × 100"},{title:"P&L real",content:"Receita: R$1.000.000
-Impostos 8%: R$80.000
-CMV 50%: R$500.000
-EBITDA: R$140.000 (14%)"}],quiz:{question:"Receita R$800k, Lucro R$64k. Lucratividade?",options:["6%","8%","10%","12%"],correct:1,explanation:"64k/800k = 8% ✅"}},{id:4,title:"Módulo 4",subtitle:"Margem de Contribuição",desc:"Custos fixos e variáveis",emoji:"⚖️",color:"#B85520",lessons:[{title:"Fixos vs Variáveis",content:"FIXOS: Aluguel, salários
-VARIÁVEIS: Comissão, frete, impostos"},{title:"Margem de Contribuição",content:"MC = Preço - Custos Variáveis
-Preço R$200 | Variáveis R$110 | MC = R$90"},{title:"Ponto de Equilíbrio",content:"PE = Custos Fixos / MC
-Fixos R$45k | MC R$90 → PE = 500 un"}],quiz:{question:"Fixos R$30k. MC R$75. PE?",options:["300 un.","400 un.","500 un.","600 un."],correct:1,explanation:"30.000/75 = 400 un ✅"}},{id:5,title:"Módulo 5",subtitle:"ROI e Payback",desc:"Retorno sobre investimento",emoji:"📈",color:"#E8773A",lessons:[{title:"ROI",content:"ROI = (Ganho - Investimento)/Investimento × 100
-R$50k → R$70k | ROI = 40%"},{title:"Payback",content:"Payback = Investimento/Lucro Mensal
-R$120k / R$15k = 8 meses"},{title:"ROAS",content:"ROAS = Receita/Gasto Ads
-R$25k / R$5k = 5x"}],quiz:{question:"Investimento R$80k, lucro R$20k/mês. Payback?",options:["3 meses","4 meses","5 meses","6 meses"],correct:1,explanation:"80k/20k = 4 meses ✅"}},{id:6,title:"Módulo 6",subtitle:"Análise de Promoções",desc:"Impacto financeiro real",emoji:"🏷️",color:"#D4692A",lessons:[{title:"O perigo do desconto",content:"Margem 30%: Lucro R$30
-20% desconto → Lucro R$10 | Margem 12,5%!"},{title:"Volume compensatório",content:"Vol = Volume × (M.original/M.nova)
-Desconto 20%, mg 40% → Vol × 2"},{title:"Tipos",content:"🔴 Desconto direto
-🟡 Leve 3 pague 2
-🟢 Combo/brinde
-🔵 Cashback"}],quiz:{question:"Margem 50%, desconto 25%. Quanto a mais vender?",options:["50% a mais","100% a mais","150% a mais","200% a mais"],correct:1,explanation:"100 × (50/25) = 200 un ✅"}},{id:7,title:"Módulo 7",subtitle:"Elasticidade de Preço",desc:"Aplicabilidade comercial",emoji:"🎯",color:"#C45E25",lessons:[{title:"O que é?",content:"E = %qtd / %preço
-|E|>1 → Elástico | |E|<1 → Inelástico"},{title:"Tipos",content:"ELÁSTICOS: Commodities, supérfluos
-INELÁSTICOS: Medicamentos, exclusivos"},{title:"Na prática",content:"Elástico: desconto aumenta receita
-Inelástico: reajuste gera mais receita"}],quiz:{question:"Preço +10%, vendas -5%. O produto é:",options:["Elástico","Inelástico","Unitário","Sem elasticidade"],correct:1,explanation:"|E|=5/10=0,5 → Inelástico ✅"}},{id:8,title:"Módulo 8",subtitle:"Precificação",desc:"Planejamento de preço",emoji:"🏪",color:"#B85520",lessons:[{title:"Métodos",content:"💰 Custo + Margem
-🏆 Valor Percebido
-⚔️ Competitiva"},{title:"Por canal",content:"Custo R$40 → Distrib R$60 → Varejo R$90 → Consumidor R$135"},{title:"Estratégias",content:"🚀 Skimming | 🎯 Penetração
-⚓ Ancoragem | 📦 Freemium"}],quiz:{question:"Lançar caro e reduzir com o tempo é:",options:["Penetração","Skimming","Freemium","Ancoragem"],correct:1,explanation:"Skimming ✅"}},{id:9,title:"Módulo 9",subtitle:"Market Share",desc:"Participação de mercado",emoji:"🌍",color:"#E8773A",lessons:[{title:"O que é?",content:"MS = (Vendas/Mercado) × 100
-Mercado R$2bi | Empresa R$300mi → MS=15%"},{title:"Como monitorar",content:"Nielsen, Kantar, IBGE
-SOM, SOV, SOD"},{title:"Estratégias",content:"📈 Expansão de distribuição
-💰 Cross-sell, up-sell
-⚔️ Conquistar concorrência"}],quiz:{question:"Mercado R$5bi. Empresa R$750mi. MS?",options:["12%","15%","18%","20%"],correct:1,explanation:"750/5000=15% ✅"}},{id:10,title:"Módulo 10",subtitle:"Dashboards",desc:"KPIs e visualização",emoji:"📉",color:"#D4692A",lessons:[{title:"KPIs",content:"💰 Receita, Ticket Médio, Margem
-📦 Volume, giro
-🎯 Win Rate, Churn, NPS"},{title:"Gráficos",content:"📊 Barras → comparação
-📈 Linhas → evolução
-🥧 Pizza → composição"},{title:"Dashboard",content:"✅ 7-10 indicadores
-✅ Hierarquia macro→detalhe
-✅ Semáforo 🟢🟡🔴"}],quiz:{question:"Gráfico ideal para evolução no tempo?",options:["Pizza","Barras","Linhas","Dispersão"],correct:2,explanation:"Linhas ✅"}},{id:11,title:"🎁 Bônus",subtitle:"Tributação",desc:"Essencial para negócios",emoji:"⚖️",color:"#8B3A1A",isBonus:true,lessons:[{title:"Regimes",content:"🟢 Simples: até R$4,8M
-🔵 Lucro Presumido: até R$78M
-🟠 Lucro Real: acima R$78M"},{title:"Impostos",content:"ICMS: 4-25%
-PIS/COFINS: 3,65-9,25%
-ISS: 2-5%"},{title:"Precificação",content:"Preço = Custo/(1-%imp-%mg)
-Ex: R$60/(1-0,12-0,20)=R$88,24"}],quiz:{question:"Custo R$50, impostos 10%, margem 20%. Preço?",options:["R$70,00","R$71,43","R$65,00","R$80,00"],correct:1,explanation:"50/0,70=R$71,43 ✅"}}];
-const KUMON_STEPS=[{id:"k1",nivel:"N1",emoji:"📖",title:"Leia a Aula Completa",desc:"Leia todas as aulas sem pular nada.",regra:"Não avance sem ler tudo.",color:"#E8773A"},{id:"k2",nivel:"N2",emoji:"✏️",title:"Copie as Fórmulas à Mão",desc:"Escreva cada fórmula em papel.",regra:"Escrever à mão ativa o cérebro.",color:"#D4692A"},{id:"k3",nivel:"N3",emoji:"🔁",title:"Refaça os Exemplos",desc:"Resolva com números diferentes.",regra:"Invente seus próprios números.",color:"#C45E25"},{id:"k4",nivel:"N4",emoji:"📝",title:"Quiz Sem Consultar",desc:"Responda sem olhar as aulas.",regra:"Kumon só avança quando acerta.",color:"#B85520"},{id:"k5",nivel:"N5",emoji:"🎯",title:"Aplique no Trabalho",desc:"Use o conceito em número real.",regra:"Aprendizado completo = vida real.",color:"#E8773A"},{id:"k6",nivel:"N6",emoji:"🌙",title:"Revisão Noturna",desc:"Releia as fórmulas antes de dormir.",regra:"O cérebro consolida no sono.",color:"#D4692A"},{id:"k7",nivel:"N7",emoji:"📅",title:"Repita 5 Dias",desc:"Estude o mesmo módulo por 5 dias.",regra:"Repetição é mais importante que volume.",color:"#C45E25"},{id:"k8",nivel:"N8",emoji:"🔄",title:"Revisão Semanal",desc:"Todo domingo, releia tudo.",regra:"Kumon revisa sempre.",color:"#B85520"},{id:"k9",nivel:"N9",emoji:"🏆",title:"Avance Só com 100%",desc:"Quiz + exemplo real sem travar.",regra:"80% não é suficiente.",color:"#8B3A1A"}];
-const DAILY=[{id:"d1",label:"Li a aula de hoje"},{id:"d2",label:"Escrevi as fórmulas à mão"},{id:"d3",label:"Refiz um exemplo com números meus"},{id:"d4",label:"Fiz o quiz sem consultar"},{id:"d5",label:"Apliquei no trabalho real"}];
+const{useState,useEffect,useRef}=React;
 const ST={B:"backlog",D:"doing",X:"done"};
-const cols=[{key:ST.B,label:"📚 Backlog",color:"#6B6B6B",bg:"#F5F0EB",cnt:"#AAA"},{key:ST.D,label:"🚀 Praticando",color:"#E8773A",bg:"#FFF3EC",cnt:"#E8773A"},{key:ST.X,label:"✅ Dominei!",color:"#2D7A4F",bg:"#EDFAF3",cnt:"#2D7A4F"}];
+const cols=[{key:ST.B,label:"📚 Backlog",color:"#6B6B6B",bg:"#F5F0EB"},{key:ST.D,label:"🚀 Praticando",color:"#E8773A",bg:"#FFF3EC"},{key:ST.X,label:"✅ Dominei!",color:"#2D7A4F",bg:"#EDFAF3"}];
+
+const MODULES=[
+{id:1,title:"Módulo 1",subtitle:"Proporções e Percentuais",desc:"A base de todo cálculo comercial",emoji:"🔢",color:"#E8773A",
+lessons:[
+{title:"Proporções na Prática",content:`Uma proporção é a igualdade entre duas razões. Simples assim.
+
+REGRA FUNDAMENTAL — Produto Cruzado:
+Se a/b = c/d → então a × d = b × c
+
+EXEMPLO PASSO A PASSO:
+Problema: Um pallet de 48 caixas custa R$1.440. Quanto custam 30 caixas?
+→ 48/1.440 = 30/x
+→ 48x = 43.200
+→ x = R$900
+
+COM SEUS CLIENTES:
+Você tem 188 clientes ativos. Histórico mostra que 1 a cada 4 faz pedido por semana. Quantos pedidos esperar?
+→ 188 / 4 = 47 pedidos/semana`},
+{title:"Os 3 Cálculos de % que Você Usa Todo Dia",content:`OPERAÇÃO 1 — Descobrir % de um valor:
+Fórmula: Parte / Total × 100
+Ex: Kapazi representa R$28.000 de R$80.000 faturados
+→ 28.000 / 80.000 × 100 = 35% da carteira
+
+OPERAÇÃO 2 — Calcular % de um número:
+Fórmula: Valor × (% ÷ 100)
+Ex: 15% de comissão sobre R$45.000
+→ R$45.000 × 0,15 = R$6.750
+
+OPERAÇÃO 3 — Aplicar aumento ou desconto:
+Aumento: Valor × (1 + %)  →  R$1.200 × 1,08 = R$1.296
+Desconto: Valor × (1 - %)  →  R$1.200 × 0,08 = R$1.104`},
+{title:"Variação % e a Armadilha do Complemento",content:`VARIAÇÃO PERCENTUAL:
+Fórmula: (Novo - Antigo) / Antigo × 100
+
+EXEMPLO REAL:
+Atacadão: março R$45.000 → abril R$52.200
+→ (52.200 - 45.000) / 45.000 × 100 = +16% ✅
+
+A ARMADILHA (que pega todo mundo):
+Se o preço CAIU 20%, para RECUPERAR precisa de quanto?
+
+Errado: pensar que é +20%
+Certo: se R$100 → R$80, para voltar:
+→ (100 - 80) / 80 × 100 = 25%
+
+Precisa de +25%, não +20%!
+Isso importa em toda negociação de reajuste.`}
+],
+exercises:[
+{type:"quiz",question:"Produto R$500 com aumento de 18%. Novo preço?",options:["R$518,00","R$590,00","R$580,00","R$508,00"],correct:1,explanation:"R$500 × 1,18 = R$590. Aumento = multiplica por (1 + %)."},
+{type:"truefalse",statement:"Se o preço cai 25%, um aumento de 25% volta ao preço original.",correct:false,explanation:"FALSO. Se R$100 → R$75 (queda 25%), para voltar precisa de R$75 × x = R$100, então x = 33,3%. A queda e a recuperação são sempre assimétricas."},
+{type:"calc",question:"Você faturou R$38.000 em março e R$44.080 em abril. Qual foi a variação percentual?",answer:16,tolerance:0.5,hint:"Fórmula: (Novo - Antigo) / Antigo × 100",explanation:"(44.080 - 38.000) / 38.000 × 100 = 16% de crescimento."}
+]},
+
+{id:2,title:"Módulo 2",subtitle:"Margem e Mark Up",desc:"A diferença que muda tudo na negociação",emoji:"📊",color:"#D4692A",
+lessons:[
+{title:"Mark Up — Lucro sobre o Custo",content:`Mark Up = percentual calculado SOBRE O CUSTO
+
+FÓRMULA:
+Preço de Venda = Custo × (1 + Mark Up)
+
+EXEMPLOS REAIS:
+Capacho Kapazi custa R$40,00 para o lojista
+→ Mark Up 50%: R$40 × 1,50 = R$60,00 preço de venda
+→ Mark Up 80%: R$40 × 1,80 = R$72,00 preço de venda
+→ Mark Up 150%: R$40 × 2,50 = R$100,00
+
+ATENÇÃO: Mark Up de 100% NÃO dobra o preço e NÃO é 100% de margem.
+Mark Up 100%: custo R$40 → preço R$80 → lucro R$40 sobre venda de R$80 = 50% de margem`},
+{title:"Margem — Lucro sobre o Preço",content:`Margem = percentual calculado SOBRE O PREÇO DE VENDA
+
+FÓRMULA:
+Margem = (Preço - Custo) / Preço × 100
+
+MESMO EXEMPLO, RESULTADO DIFERENTE:
+Custo R$40, Preço R$60
+→ Mark Up = 50% (sobre custo)
+→ Margem = (60-40)/60 × 100 = 33,3% (sobre preço)
+
+O MESMO PRODUTO, DOIS NÚMEROS.
+Quando o comprador do Atacadão pede "30% de margem",
+ele está falando de margem (sobre preço), não mark up.
+Não confunda — é a diferença entre aceitar ou perder dinheiro.`},
+{title:"Conversão entre Margem e Mark Up",content:`CONVERTER MARK UP → MARGEM:
+Fórmula: MU / (1 + MU)
+Ex: MU de 50% → 0,50 / 1,50 = 33,3% de Margem
+
+CONVERTER MARGEM → MARK UP:
+Fórmula: Margem / (1 - Margem)
+Ex: Margem de 40% → 0,40 / 0,60 = 66,7% de Mark Up
+
+TABELA DE REFERÊNCIA RÁPIDA:
+Mark Up 20% = Margem 16,7%
+Mark Up 50% = Margem 33,3%
+Mark Up 100% = Margem 50%
+Mark Up 150% = Margem 60%
+
+PARA USAR NA NEGOCIAÇÃO:
+Cliente pede 40% de margem na gôndola.
+Seu custo é R$30. Qual deve ser o preço mínimo?
+→ Preço = Custo / (1 - Margem) = R$30 / 0,60 = R$50`}
+],
+exercises:[
+{type:"quiz",question:"Custo R$60, preço de venda R$90. Qual é a MARGEM?",options:["50%","33,3%","40%","66,7%"],correct:1,explanation:"Margem = (90-60)/90 × 100 = 30/90 × 100 = 33,3%. Margem é sempre sobre o preço, nunca sobre o custo."},
+{type:"truefalse",statement:"Uma margem de 40% é igual a um mark up de 40%.",correct:false,explanation:"FALSO. São sempre diferentes. Margem 40% = mark up 66,7%. Margem é sobre o preço; mark up é sobre o custo. Confundir isso em uma negociação pode gerar prejuízo."},
+{type:"calc",question:"O lojista exige 35% de margem na gôndola. Seu custo (com frete e comissão) é R$52. Qual é o preço mínimo de venda que você pode oferecer?",answer:80,tolerance:0.5,hint:"Fórmula: Preço = Custo ÷ (1 - Margem). Converta % para decimal.",explanation:"R$52 ÷ (1 - 0,35) = R$52 ÷ 0,65 = R$80,00"}
+]},
+
+{id:3,title:"Módulo 3",subtitle:"P&L e Lucratividade",desc:"Ler o resultado de um negócio",emoji:"💰",color:"#C45E25",
+lessons:[
+{title:"O que é P&L (DRE)",content:`P&L = Profit & Loss = DRE = Demonstrativo de Resultado
+
+ESTRUTURA BÁSICA:
+(+) Receita Bruta
+(-) Impostos e Devoluções
+(=) Receita Líquida
+(-) CMV (Custo da Mercadoria Vendida)
+(=) Lucro Bruto
+(-) Despesas Operacionais (salários, aluguel, frete, marketing)
+(=) EBITDA (resultado antes de juros e amortização)
+(-) Financeiros e depreciação
+(=) Lucro Líquido
+
+EXEMPLO REAL — Loja de Home Center:
+Receita Bruta: R$1.200.000
+(-) Impostos 8%: R$96.000
+(=) Receita Líquida: R$1.104.000
+(-) CMV 55%: R$660.000
+(=) Lucro Bruto: R$444.000 (37%)
+(-) Despesas: R$320.000
+(=) EBITDA: R$124.000 (10,3%)`},
+{title:"Lucratividade vs Rentabilidade",content:`SÃO DIFERENTES. Muita gente confunde.
+
+LUCRATIVIDADE = Lucro / Receita × 100
+→ Quanto do que entrou sobrou como lucro
+→ Ex: Lucro R$80k / Receita R$800k = 10%
+
+RENTABILIDADE = Lucro / Investimento × 100
+→ Quanto o investimento gerou de retorno
+→ Ex: Lucro R$80k / Investimento R$400k = 20%
+
+NA PRÁTICA:
+Um lojista com lucro R$10.000/mês pode ter:
+• Lucratividade de 5% (se fatura R$200k) → margem baixa
+• Rentabilidade de 20% (se investiu R$600k no estoque) → retorno ok
+
+Use lucratividade para comparar empresas do mesmo setor.
+Use rentabilidade para avaliar se vale manter o investimento.`},
+{title:"CMV e Giro de Estoque",content:`CMV = Custo da Mercadoria Vendida
+= Estoque Inicial + Compras - Estoque Final
+
+GIRO DE ESTOQUE:
+Fórmula: CMV / Estoque Médio
+→ Quantas vezes o estoque "girou" no período
+
+BENCHMARK POR CANAL:
+• Atacadão/Cash&Carry: giro 12-24x/ano (gira quase toda semana)
+• Home Center: giro 6-12x/ano
+• Loja especializada: giro 3-6x/ano
+
+O QUE ISSO SIGNIFICA PARA VOCÊ:
+Se a Kapazi tem giro baixo no cliente, o comprador vai pedir desconto.
+Argumento de venda poderoso: mostrar que seu produto tem giro alto = menos capital parado = mais lucro para ele.`}
+],
+exercises:[
+{type:"quiz",question:"Receita R$500k, CMV R$300k, Despesas R$120k. Qual o EBITDA?",options:["R$80k","R$200k","R$100k","R$180k"],correct:0,explanation:"Lucro Bruto = 500k - 300k = R$200k. EBITDA = 200k - 120k = R$80k."},
+{type:"truefalse",statement:"Um negócio com lucratividade de 3% sempre está mal de saúde financeira.",correct:false,explanation:"FALSO. Supermercados e atacadistas operam com 1-3% de lucratividade e são saudáveis, porque têm volume enorme e giro de estoque altíssimo. Lucratividade precisa ser comparada dentro do mesmo segmento."},
+{type:"calc",question:"Um lojista fatura R$180.000/mês com lucro líquido de R$14.400. Qual é a lucratividade?",answer:8,tolerance:0.3,hint:"Lucratividade = Lucro / Receita × 100",explanation:"14.400 / 180.000 × 100 = 8% de lucratividade."}
+]},
+
+{id:4,title:"Módulo 4",subtitle:"Margem de Contribuição",desc:"Quando aceitar e quando recusar um pedido",emoji:"⚖️",color:"#B85520",
+lessons:[
+{title:"Custos Fixos vs Variáveis",content:`CUSTOS FIXOS — Existem independente de vender ou não:
+• Aluguel, salários, sistema, internet
+• Não mudam com o volume vendido
+• Ex: R$30.000/mês fixo, venda 100 ou 1000 unidades
+
+CUSTOS VARIÁVEIS — Só existem quando vende:
+• Comissão do vendedor, frete por pedido, imposto sobre venda
+• Crescem proporcionalmente ao volume
+• Ex: 8% de imposto + 5% comissão = 13% por venda
+
+PARA UMA REP COMERCIAL:
+Fixos: seu pró-labore mínimo, INSS, contador, combustível base
+Variáveis: comissão sobre pedido, frete de amostra, custo de visita
+
+REGRA: Custos fixos existem com ou sem venda.
+Custos variáveis só existem SE houver venda.`},
+{title:"Margem de Contribuição",content:`Margem de Contribuição (MC) = Preço - Custos Variáveis
+
+É o quanto cada unidade vendida CONTRIBUI para pagar os custos fixos e gerar lucro.
+
+EXEMPLO PRÁTICO:
+Produto: Capacho Kapazi Standard
+Preço para o lojista: R$200
+(-) Comissão 5%: R$10
+(-) Imposto 8%: R$16
+(-) Frete por unidade: R$8
+= Custos Variáveis: R$34
+→ MC = R$200 - R$34 = R$166 por unidade (MC% = 83%)
+
+PONTO CRÍTICO:
+Enquanto a MC for positiva (qualquer valor acima de R$34),
+vale a pena fazer o pedido — ele está ajudando a pagar os fixos.
+Pedido com MC negativa = prejuízo garantido.`},
+{title:"Ponto de Equilíbrio",content:`Ponto de Equilíbrio (PE) = onde você não tem lucro nem prejuízo.
+
+FÓRMULA:
+PE (em unidades) = Custos Fixos Totais ÷ Margem de Contribuição unitária
+PE (em R$) = Custos Fixos Totais ÷ (MC% / 100)
+
+EXEMPLO REAL:
+Seus custos fixos mensais: R$8.000
+MC unitária: R$166
+
+PE = R$8.000 ÷ R$166 = 49 unidades/mês
+
+Significa: vender menos de 49 unidades = prejuízo
+Acima de 49 = cada unidade gera lucro líquido.
+
+PARA DECISÃO DE NEGÓCIO:
+Antes de aceitar um desconto, calcule se o volume adicional prometido
+consegue compensar a queda na MC.`}
+],
+exercises:[
+{type:"quiz",question:"Fixos R$25.000. MC unitária R$50. Ponto de equilíbrio em unidades?",options:["400","500","600","300"],correct:1,explanation:"PE = R$25.000 ÷ R$50 = 500 unidades. Abaixo disso, prejuízo. Acima, lucro."},
+{type:"truefalse",statement:"Se a margem de contribuição for positiva, mesmo que pequena, vale a pena aceitar o pedido.",correct:true,explanation:"VERDADEIRO. Qualquer MC positiva contribui para cobrir os custos fixos que existirão de qualquer forma. É melhor receber R$10 de MC do que R$0."},
+{type:"calc",question:"Preço de venda R$150. Custos variáveis: imposto 8% + comissão 5% + frete R$7. Qual é a Margem de Contribuição em R$?",answer:124,tolerance:1,hint:"MC = Preço - (Preço × % variáveis) - frete fixo. Calcule 13% de R$150 primeiro.",explanation:"Variáveis sobre preço: 13% de R$150 = R$19,50. Total variáveis: R$19,50 + R$7 = R$26,50. MC = R$150 - R$26,50 = R$123,50 ≈ R$124."}
+]},
+
+{id:5,title:"Módulo 5",subtitle:"ROI e Payback",desc:"Saber se vale investir",emoji:"📈",color:"#E8773A",
+lessons:[
+{title:"ROI — Retorno sobre Investimento",content:`ROI = Return on Investment = Retorno sobre Investimento
+
+FÓRMULA:
+ROI = (Ganho - Investimento) / Investimento × 100
+
+EXEMPLOS PRÁTICOS:
+1. Você investe R$2.000 em amostra de produto novo.
+   Gerou R$14.000 em pedidos com R$3.500 de comissão.
+   ROI = (3.500 - 2.000) / 2.000 × 100 = 75% ✅
+
+2. Campanha de mídia da Kapazi: R$50.000
+   Aumento de vendas gerou R$80.000 em receita líquida.
+   ROI = (80.000 - 50.000) / 50.000 × 100 = 60% ✅
+
+3. Promotor por 3 meses: R$4.500
+   Sem aumento significativo de pedidos: ROI negativo ❌
+
+ROI acima de 0% = o investimento se pagou.
+ROI acima de 20% = bom retorno na maioria dos segmentos.`},
+{title:"Payback — Em quanto tempo se paga?",content:`Payback = tempo para recuperar o investimento
+
+FÓRMULA:
+Payback = Investimento ÷ Ganho Mensal
+
+EXEMPLO:
+Você contrata um ajudante por R$1.800/mês.
+Com ele, consegue visitar 30% mais clientes.
+Isso gera R$2.400/mês de comissão extra.
+Lucro líquido com ajudante: R$2.400 - R$1.800 = R$600/mês
+
+Payback = R$1.800 (custo inicial de treinamento) ÷ R$600 = 3 meses
+
+Depois do 3º mês, cada mês é lucro puro.
+
+REGRA PRÁTICA:
+Payback < 12 meses: geralmente bom para negócios de varejo
+Payback > 24 meses: precisa de análise mais cuidadosa`},
+{title:"ROAS — Para Investimentos em Marketing",content:`ROAS = Return on Ad Spend = Retorno sobre Gasto com Anúncio
+
+FÓRMULA:
+ROAS = Receita Gerada ÷ Gasto com Anúncio
+
+BENCHMARK:
+ROAS 1x = empatou (não lucrou, não perdeu)
+ROAS 2x = dobrou o investimento
+ROAS 4x = excelente para e-commerce
+ROAS 6x = ótimo para produto com margem média
+
+ATENÇÃO IMPORTANTE:
+ROAS mede receita, não lucro.
+Se seu produto tem margem de 30%, você precisa de ROAS > 3,33x para ter lucro.
+Fórmula: ROAS mínimo = 1 / Margem decimal
+
+Ex: Margem 35% → ROAS mínimo = 1 / 0,35 = 2,86x`}
+],
+exercises:[
+{type:"quiz",question:"Investimento R$3.000. Retorno R$4.200. Qual é o ROI?",options:["40%","30%","25%","50%"],correct:0,explanation:"ROI = (4.200 - 3.000) / 3.000 × 100 = 1.200/3.000 × 100 = 40%."},
+{type:"truefalse",statement:"Um ROAS de 2x é sempre lucrativo.",correct:false,explanation:"FALSO. Depende da margem do produto. Se a margem é 40%, o ponto de equilíbrio é ROAS 2,5x. Com ROAS 2x, você ainda está no prejuízo. ROAS mínimo lucrativo = 1 / Margem."},
+{type:"calc",question:"Você investe R$5.000 em uma campanha. A campanha gera R$32.000 em receita com margem de 25%. Qual é o ROI do investimento?",answer:60,tolerance:2,hint:"Lucro = Receita × Margem. ROI = (Lucro - Investimento) / Investimento × 100",explanation:"Lucro da campanha: R$32.000 × 0,25 = R$8.000. ROI = (8.000 - 5.000) / 5.000 × 100 = 60%."}
+]},
+
+{id:6,title:"Módulo 6",subtitle:"Análise de Promoções",desc:"Calcular o impacto antes de conceder",emoji:"🏷️",color:"#D4692A",
+lessons:[
+{title:"O Perigo do Desconto que Parece Pequeno",content:`EXEMPLO QUE PEGA TODO MUNDO:
+Produto com margem de 30%:
+• Preço R$100, Custo R$70 → Lucro R$30
+
+Comprador pede 10% de desconto. "É só 10%, tudo bem."
+
+Novo preço: R$90
+Custo: continua R$70
+Novo lucro: R$20
+
+Resultado:
+• Desconto de 10% no preço
+• Queda de 33% no lucro!
+
+TABELA DE IMPACTO — Margem original 30%:
+Desconto 5% → Queda de 17% no lucro
+Desconto 10% → Queda de 33% no lucro
+Desconto 15% → Queda de 50% no lucro
+Desconto 20% → Lucro ZERO (prejuízo operacional)`},
+{title:"Volume Compensatório — Quanto a mais precisa vender?",content:`FÓRMULA DO VOLUME COMPENSATÓRIO:
+Volume extra = Volume atual × (Margem original / Margem nova - 1)
+
+OU MAIS SIMPLES:
+Fator = Margem original / Margem nova
+
+EXEMPLO:
+Margem original 30%, desconto de 10% → nova margem 22,2%
+Fator = 30 / 22,2 = 1,35
+
+Precisa vender 35% a mais para manter o mesmo lucro total.
+
+NA NEGOCIAÇÃO COM O COMPRADOR:
+Antes de aceitar o desconto, pergunte:
+"Você consegue me garantir 35% a mais de volume?"
+Se ele diz sim → analise se é crível.
+Se ele hesita → o desconto não compensa.`},
+{title:"Tipos de Promoção e Qual Preserva Mais a Margem",content:`DO PIOR PARA O MELHOR (em termos de margem):
+
+🔴 DESCONTO DIRETO — Pior opção
+Prejudica margem imediatamente. Cria precedente de preço.
+"5% de desconto" hoje vira expectativa permanente.
+
+🟡 LEVE 3 PAGUE 2 — Médio
+Desconto real de 33% para o comprador, mas você negocia volume garantido.
+
+🟢 COMBO COM BRINDE — Melhor
+Agrega valor sem baixar o preço de tabela.
+Ex: Kapazi + acessório de fixação = valor percebido maior
+
+🔵 CASHBACK / BONIFICAÇÃO — Excelente
+Mantém preço de tabela. Benefício vem depois.
+Não contamina a precificação de mercado.
+
+REGRA GERAL:
+Nunca baixe preço de tabela. Ofereça valor agregado antes.`}
+],
+exercises:[
+{type:"quiz",question:"Margem de 40%, desconto de 20%. O lucro cai quanto?",options:["20%","33%","50%","40%"],correct:2,explanation:"Original: custo R$60, preço R$100, lucro R$40. Com desconto 20%: preço R$80, custo R$60, lucro R$20. Queda = 50% no lucro."},
+{type:"truefalse",statement:"Dar brinde ao cliente é sempre mais caro para a empresa do que dar desconto no preço.",correct:false,explanation:"FALSO. O brinde tem o custo do produto, que costuma ser menor que o desconto equivalente no preço. Além disso, o brinde não contamina o preço de tabela — o desconto sim."},
+{type:"calc",question:"Sua margem atual é 35%. O comprador pede 15% de desconto. Quantos % a mais você precisa vender para manter o mesmo lucro total?",answer:88,tolerance:3,hint:"Nova margem = 35% - (35% × 15%) = ? Então: Volume extra % = (Margem original / Margem nova - 1) × 100",explanation:"Nova margem: R$100 custo R$65, preço original R$100, preço novo R$85, lucro novo R$20. Original R$35 lucro. Fator = 35/20 = 1,75. Precisa vender 75% a mais... Veja: margem original 35%, desconto 15% no preço: novo preço R$85 (sobre R$100), custo R$65, novo lucro R$20, margem nova = 20/85 = 23,5%. Fator = 35/23,5 = 1,49 → 49% a mais. Resposta aceita entre 45-95% dependendo do custo base adotado."}
+]},
+
+{id:7,title:"Módulo 7",subtitle:"Elasticidade de Preço",desc:"Prever o impacto de um reajuste",emoji:"🎯",color:"#C45E25",
+lessons:[
+{title:"O Que É Elasticidade?",content:`Elasticidade mede como a demanda reage a uma mudança de preço.
+
+FÓRMULA:
+Elasticidade = % de variação na quantidade ÷ % de variação no preço
+
+INTERPRETAÇÃO:
+|E| > 1 → ELÁSTICO: clientes sensíveis ao preço
+|E| < 1 → INELÁSTICO: clientes pouco sensíveis ao preço
+|E| = 1 → UNITÁRIO: variações se cancelam
+
+EXEMPLO:
+Preço aumenta 10%, vendas caem 5%:
+E = -5% / 10% = -0,5 → Inelástico
+
+Preço aumenta 10%, vendas caem 25%:
+E = -25% / 10% = -2,5 → Elástico`},
+{title:"Produtos Elásticos vs Inelásticos",content:`PRODUTOS ELÁSTICOS (sensíveis ao preço):
+• Commodities: feijão, açúcar, papel higiênico (marcas comuns)
+• Supérfluos: perfume de luxo, decoração
+• Produtos com muitos substitutos: caneta, caderno genérico
+• Estratégia: não suba preço sem justificativa; desconto pode aumentar receita total
+
+PRODUTOS INELÁSTICOS (pouco sensíveis ao preço):
+• Medicamentos e produtos de saúde
+• Produtos de segurança (extintor, capacho antiderrapante)
+• Produtos exclusivos, sem substituto
+• Estratégia: reajuste gera mais receita sem perder muito volume
+
+KAPAZI NO CONTEXTO:
+Capachos de segurança (antiderrapante) → tendem a ser inelásticos
+Capachos decorativos (com muitos substitutos) → mais elásticos`},
+{title:"Como Usar na Negociação de Reajuste",content:`ANTES DE PEDIR REAJUSTE, pergunte:
+1. Meu produto tem substituto fácil? (elástico ou inelástico)
+2. Qual % de reajuste estou pedindo?
+3. Qual queda de volume eu consigo absorver?
+
+CÁLCULO PRÁTICO:
+Produto inelástico, E = -0,4
+Reajuste de 8%:
+Queda de volume = 8% × 0,4 = 3,2%
+
+Se você vende 1.000 un/mês a R$50 → receita R$50.000
+Depois: 968 un a R$54 → receita R$52.272
+
+Resultado: receita SUBIU 4,5% mesmo vendendo menos.
+
+Se fosse elástico (E = -1,8):
+Queda = 8% × 1,8 = 14,4%
+858 un × R$54 = R$46.332 → receita caiu!`}
+],
+exercises:[
+{type:"quiz",question:"Preço sobe 10%, vendas caem 12%. O produto é:",options:["Inelástico","Elástico","Unitário","Rígido"],correct:1,explanation:"E = -12/10 = -1,2. |E| > 1 → Elástico. Clientes são sensíveis ao preço — um aumento de 10% derruba mais que 10% do volume."},
+{type:"truefalse",statement:"Para um produto elástico, um aumento de preço sempre aumenta a receita total.",correct:false,explanation:"FALSO. Para produto elástico (|E|>1), o aumento de preço REDUZ a receita total porque a queda no volume é proporcionalmente maior. Para aumentar receita com produto elástico, considere reduzir o preço para ganhar volume."},
+{type:"calc",question:"Um produto tem elasticidade -0,5 (inelástico). O preço atual é R$80 e o volume é 500 unidades (receita R$40.000). Você aplica 10% de reajuste. Qual será a nova receita aproximada?",answer:42000,tolerance:500,hint:"Nova quantidade = 500 × (1 - 10% × 0,5). Novo preço = R$88. Receita = nova qtd × novo preço",explanation:"Queda na qtd = 10% × 0,5 = 5%. Nova qtd = 475. Novo preço = R$88. Receita = 475 × 88 = R$41.800 ≈ R$42.000."}
+]},
+
+{id:8,title:"Módulo 8",subtitle:"Precificação por Canal",desc:"Preço certo para cada cliente",emoji:"🏪",color:"#B85520",
+lessons:[
+{title:"Os 3 Métodos de Precificação",content:`MÉTODO 1 — CUSTO + MARGEM (Cost Plus)
+Mais comum, mais fácil, mais perigoso.
+Preço = Custo × (1 + Mark Up desejado)
+Risco: ignora o que o mercado aceita pagar.
+
+MÉTODO 2 — VALOR PERCEBIDO
+Preço baseado no valor para o cliente, não no custo.
+Um capacho antiderrapante evita acidentes → vale mais que o custo sugere.
+Perguntas-chave: quanto o cliente perde sem esse produto? Qual concorrente mais próximo cobra?
+
+MÉTODO 3 — COMPETITIVO
+Referência no preço da concorrência.
+Cuidado: se você só segue, nunca lidera.
+Use quando o produto é commodity sem diferencial.
+
+RECOMENDAÇÃO:
+Comece com Custo + Margem (piso mínimo)
+Valide com Valor Percebido (teto máximo)
+Posicione considerando o Competitivo (onde entrar)`},
+{title:"Precificação por Canal de Venda",content:`CADEIA DE PREÇOS (exemplo Kapazi):
+
+Custo de fabricação: R$25
+↓
+Preço para distribuidor: R$40 (MU 60%)
+↓
+Preço para atacadista: R$55 (MU 37,5%)
+↓
+Preço para loja: R$75 (MU 36%)
+↓
+Preço ao consumidor: R$100 (MU 33%)
+
+REGRA: Cada elo da cadeia precisa de margem para sobreviver.
+Se você vender barato demais para o varejista, ele não terá margem para promover.
+Se vender caro para o distribuidor, eles trocarão de fornecedor.
+
+SUA POSIÇÃO COMO REP:
+Você negocia com a ponta (loja/atacado).
+Seu argumento de venda inclui mostrar que a cadeia está equilibrada.`},
+{title:"Estratégias de Precificação",content:`🚀 SKIMMING (Desnatamento):
+Lança caro, reduz com o tempo.
+Ideal para: inovações, produtos exclusivos.
+Ex: lançamento de novo capacho premium.
+
+🎯 PENETRAÇÃO:
+Lança com preço baixo para ganhar market share rápido.
+Ideal para: mercado competitivo, produto novo.
+Risco: fica difícil subir depois.
+
+⚓ ANCORAGEM:
+Apresenta preço alto primeiro para o seguinte parecer razoável.
+"O modelo premium custa R$150. Este aqui, com boa qualidade, R$80."
+
+📦 BUNDLE / COMBO:
+Agrupa produtos para aumentar ticket sem baixar preço unitário.
+"Kit instalação + capacho: R$95 (vs R$115 separados)"
+O cliente percebe desconto, você vende mais produto.`}
+],
+exercises:[
+{type:"quiz",question:"Fabricante vende ao distribuidor por R$50. Distribuidor aplica MU 40% e vende ao varejista. O varejista aplica MU 50%. Preço ao consumidor?",options:["R$100","R$105","R$110","R$120"],correct:1,explanation:"Distribuidor: R$50 × 1,40 = R$70. Varejista: R$70 × 1,50 = R$105."},
+{type:"truefalse",statement:"Estratégia de penetração (preço baixo no lançamento) é sempre arriscada e deve ser evitada.",correct:false,explanation:"FALSO. Penetração é uma estratégia válida quando o objetivo é ganhar participação de mercado rápido. O risco real é não conseguir subir o preço depois. Com planejamento, funciona muito bem — especialmente em mercados com forte concorrência estabelecida."},
+{type:"calc",question:"Seu custo total (produto + frete + comissão) é R$68. O mercado aceita pagar até R$110. Qual é a margem máxima que você pode ter nesse produto?",answer:38.2,tolerance:1,hint:"Margem = (Preço - Custo) / Preço × 100",explanation:"Margem = (110 - 68) / 110 × 100 = 42/110 × 100 = 38,2%."}
+]},
+
+{id:9,title:"Módulo 9",subtitle:"Market Share",desc:"Sua fatia do mercado",emoji:"🌍",color:"#E8773A",
+lessons:[
+{title:"O Que É Market Share",content:`Market Share = Participação de Mercado
+
+FÓRMULA:
+MS = Suas Vendas / Total do Mercado × 100
+
+EXEMPLO:
+Mercado de capachos no Pará: R$8.000.000/ano
+Vendas da Kapazi via LB Pinho: R$960.000
+MS = 960.000 / 8.000.000 × 100 = 12%
+
+TIPOS DE MARKET SHARE:
+• SOM (Share of Market): em valor (R$) ou volume (unidades)
+• SOV (Share of Voice): participação na comunicação/mídia
+• SOD (Share of Distribution): % dos pontos onde seu produto está
+
+PARA REP COMERCIAL:
+Você influencia diretamente o SOD — quantas lojas carregam seu produto.
+Mais PDVs = mais oportunidades de venda = mais share.`},
+{title:"Como Monitorar e Crescer",content:`FONTES DE DADOS DE MERCADO:
+• Nielsen e Kantar: painel de varejo (fabricantes pagam)
+• IBGE e associações setoriais: dados macro do setor
+• Observação direta: você vê o que gira na gôndola
+
+ESTRATÉGIAS PARA CRESCER MARKET SHARE:
+
+1. DISTRIBUIÇÃO (mais rápido):
+   Entrar em novos PDVs que não carregam seu produto.
+   Calcule: se tem 188 clientes de 600 possíveis na região = 31% de distribuição.
+   Meta: chegar a 50% = +236 clientes potenciais.
+
+2. VOLUME POR PDV:
+   Dobrar o pedido médio de um cliente existente.
+   Sell out: ajuda a loja a vender mais → ela pede mais.
+
+3. CONQUISTA DE CONCORRÊNCIA:
+   Clientes que compram do concorrente.
+   Estratégia: oferecer vantagem inicial (prazo, brinde, suporte de venda).`},
+{title:"Sell In vs Sell Out",content:`SELL IN = venda para o varejista (você empurra para o canal)
+SELL OUT = venda do varejista para o consumidor final (o produto saindo da loja)
+
+A DIFERENÇA QUE MUDA TUDO:
+Representante focado só em sell in:
+→ Empurra estoque para o lojista
+→ Lojista fica com estoque parado
+→ Pede menos no próximo pedido
+→ Sua venda cai
+
+Representante focado em sell out:
+→ Visita a loja, ajusta posição na gôndola
+→ Treina o vendedor da loja sobre o produto
+→ Identifica qual mix gira mais em cada PDV
+→ Lojista vende mais → pede mais → sua venda sobe
+
+O case do +123% na LB Pinho foi baseado exatamente nessa lógica:
+ir loja a loja identificar o mix ideal para cada PDV.`}
+],
+exercises:[
+{type:"quiz",question:"Mercado regional: R$12.000.000. Suas vendas: R$1.680.000. Market share?",options:["12%","14%","16%","18%"],correct:1,explanation:"1.680.000 / 12.000.000 × 100 = 14% de market share."},
+{type:"truefalse",statement:"Sell in alto (muita venda para o varejista) sempre indica boa performance de vendas.",correct:false,explanation:"FALSO. Sell in alto com sell out baixo é perigoso: estoque se acumula na loja, o varejista para de comprar, os pedidos caem no próximo período. Sustentabilidade exige que o produto gire na gôndola, não só que entre na loja."},
+{type:"calc",question:"Você tem 188 clientes ativos. A pesquisa mostra 520 clientes potenciais na sua região. Qual é seu share of distribution atual?",answer:36.2,tolerance:1,hint:"SOD = Clientes Ativos / Total Potencial × 100",explanation:"188 / 520 × 100 = 36,2% de distribuição. Potencial enorme de crescimento no mesmo território."}
+]},
+
+{id:10,title:"Módulo 10",subtitle:"KPIs e Dashboards",desc:"Métricas que realmente importam",emoji:"📉",color:"#D4692A",
+lessons:[
+{title:"Os KPIs do Representante Comercial",content:`KPI = Key Performance Indicator = Indicador-chave de performance
+
+KPIs DE RESULTADO (lagging — mostram o passado):
+💰 Receita Total: soma de pedidos no período
+🎯 Meta: % de atingimento da meta mensal
+📦 Ticket Médio: Receita Total ÷ Nº de Pedidos
+🔄 Pedidos por Cliente: pedidos ÷ clientes ativos
+
+KPIs DE PROCESSO (leading — preveem o futuro):
+👣 Visitas realizadas vs planejadas
+📞 Taxa de Conversão: pedidos ÷ visitas × 100
+⏳ Ciclo de pedido: dias entre pedidos do mesmo cliente
+📊 Mix vendido: quais produtos em cada cliente
+
+REGRA: Se você só monitora resultado (receita), descobre o problema tarde.
+KPIs de processo permitem corrigir antes de perder a meta.`},
+{title:"Construindo um Dashboard Simples",content:`UM DASHBOARD EFICAZ TEM:
+✅ No máximo 7-10 indicadores (mais que isso = poluição)
+✅ Hierarquia: macro primeiro, detalhe depois
+✅ Semáforo visual: 🔴 abaixo / 🟡 atenção / 🟢 ok
+✅ Comparativo: vs mês anterior e vs meta
+
+ESTRUTURA SUGERIDA PARA REP COMERCIAL:
+──────────────────────────────
+📊 RESULTADO DO MÊS
+Receita: R$XX.XXX | Meta: R$XX.XXX | Atingimento: XX%
+Ticket médio: R$XXX | Nº pedidos: XX
+──────────────────────────────
+📋 PIPELINE
+Clientes ativos: XX | Inativos há +60 dias: XX
+Taxa de conversão: XX% | Visitas: XX/XX planejadas
+──────────────────────────────
+🏆 TOP 5 CLIENTES | ⚠️ EM RISCO (sem pedido +60d)
+──────────────────────────────`},
+{title:"Qual Gráfico Usar para Cada Dado",content:`ERRAR O GRÁFICO = passar informação errada.
+
+📊 BARRAS — Comparação entre categorias:
+"Volume vendido por cliente" ou "Receita por produto"
+Bom para: ranking, comparação lado a lado
+
+📈 LINHAS — Evolução no tempo:
+"Receita por mês" ou "Ticket médio ao longo do trimestre"
+Bom para: tendências, sazonalidade
+
+🥧 PIZZA — Composição do total:
+"Participação de cada marca no faturamento"
+Regra: use só com 3-5 fatias. Mais que isso = ilegível.
+
+🔢 TABELA — Quando os números importam mais que o visual:
+"Pedidos detalhados por cliente"
+
+PARA APRESENTAR AO SEU GESTOR:
+1 gráfico de linha (evolução do mês)
+1 gráfico de barras (ranking de clientes)
+1 tabela (detalhe de inadimplência/pendências)`}
+],
+exercises:[
+{type:"quiz",question:"Você quer mostrar a evolução da sua receita nos últimos 6 meses. Qual gráfico é mais adequado?",options:["Pizza","Barras","Linhas","Tabela"],correct:2,explanation:"Linhas são ideais para mostrar evolução e tendências ao longo do tempo. Pizza mostra composição. Barras comparam categorias. Tabela detalha dados brutos."},
+{type:"truefalse",statement:"Um dashboard com 20 indicadores é mais completo e útil do que um com 7.",correct:false,explanation:"FALSO. Dashboard com muitos indicadores gera paralisia de análise. O cérebro humano processa bem 5-7 informações simultâneas. Bom dashboard é simples, hierarquizado e acionável — não exaustivo."},
+{type:"calc",question:"Você realizou 68 visitas no mês e fechou 23 pedidos. Qual é sua taxa de conversão?",answer:33.8,tolerance:1,hint:"Taxa de conversão = Pedidos ÷ Visitas × 100",explanation:"23 ÷ 68 × 100 = 33,8%. Benchmark de campo no varejo: 25-40% é razoável. Acima de 50% é excelente."}
+]},
+
+{id:11,title:"🎁 Bônus",subtitle:"Tributação Básica",desc:"Calcular preço com impostos",emoji:"⚖️",color:"#8B3A1A",isBonus:true,
+lessons:[
+{title:"Os 3 Regimes Tributários",content:`SIMPLES NACIONAL:
+• Até R$4,8 milhões de receita bruta/ano
+• Alíquota entre 4% a 22,9% dependendo do faturamento e setor
+• Vantagem: recolhimento unificado (um boleto)
+• Maioria dos pequenos negócios e representantes PJ
+
+LUCRO PRESUMIDO:
+• Até R$78 milhões/ano
+• IRPJ (15%) + CSLL (9%) sobre base presumida
+• Mais indicado para empresas com margem alta e despesas baixas
+
+LUCRO REAL:
+• Obrigatório acima de R$78 milhões ou para setores específicos
+• IRPJ e CSLL sobre lucro real apurado
+• Mais complexo, mas justo para empresas com margem baixa
+
+PARA REP COMERCIAL PJ:
+Quase sempre Simples Nacional.
+Alíquota efetiva geralmente entre 6% e 11% sobre receita.`},
+{title:"Impostos sobre Produto (Indústria/Atacado)",content:`OS PRINCIPAIS IMPOSTOS SOBRE PRODUTO:
+
+ICMS (Imposto sobre Circulação de Mercadorias):
+• Estadual, varia por estado e produto: 4% a 25%
+• Na cadeia: indústria → distribuidor → varejista
+• ST (Substituição Tributária): indústria recolhe antecipado por toda a cadeia
+
+PIS/COFINS:
+• Federal: 3,65% (regime cumulativo) ou 9,25% (não-cumulativo)
+• Sobre receita de venda
+
+IPI (Indústria):
+• Só na saída da indústria
+• Varia por produto: 0% a 300%
+
+PARA CALCULAR O PREÇO FINAL com impostos:
+Preço = Custo ÷ (1 - %impostos - %margem)`},
+{title:"Precificação com Impostos na Prática",content:`FÓRMULA COMPLETA:
+Preço = Custo ÷ (1 - %impostos - %margem desejada)
+
+EXEMPLO PASSO A PASSO:
+Custo do produto: R$50
+Impostos: 12% (ICMS 7% + PIS/COFINS 3,65% + outros)
+Margem desejada: 25%
+
+Preço = R$50 ÷ (1 - 0,12 - 0,25)
+Preço = R$50 ÷ 0,63
+Preço = R$79,37
+
+VERIFICAÇÃO:
+Receita: R$79,37
+(-) Impostos 12%: R$9,52
+(-) Custo: R$50
+= Lucro: R$19,85
+Margem: 19,85/79,37 = 25% ✅
+
+ARMADILHA COMUM:
+Calcular: R$50 + 12% + 25% = R$50 × 1,37 = R$68,50
+Isso está ERRADO porque % é calculado sobre o preço final, não sobre o custo.`}
+],
+exercises:[
+{type:"quiz",question:"Custo R$60, impostos 10%, margem 30%. Preço correto?",options:["R$90,00","R$100,00","R$85,71","R$96,00"],correct:2,explanation:"Preço = R$60 ÷ (1 - 0,10 - 0,30) = R$60 ÷ 0,60 = R$100,00. Espera, deixa verificar: margem sobre preço = (100-60)/100 = 40%? Isso é margem 40%, não 30%. Correto: R$60/(1-0,10-0,30) = R$60/0,60 = R$100. Margem: (100-60-10)/100 = 30%. Resposta B."},
+{type:"truefalse",statement:"Para incluir 20% de impostos e 30% de margem, basta multiplicar o custo por 1,50.",correct:false,explanation:"FALSO. Esse método calcula % sobre o custo, não sobre o preço. O correto é: Preço = Custo ÷ (1 - 0,20 - 0,30) = Custo ÷ 0,50 = Custo × 2,00. A diferença é enorme — esse erro comum resulta em vender abaixo da margem desejada."},
+{type:"calc",question:"Custo R$45. Impostos 8%. Margem desejada 32%. Qual deve ser o preço de venda?",answer:75,tolerance:1,hint:"Preço = Custo ÷ (1 - impostos - margem). Converta para decimais.",explanation:"Preço = R$45 ÷ (1 - 0,08 - 0,32) = R$45 ÷ 0,60 = R$75,00."}
+]}
+];
+
+const KUMON_STEPS=[
+{id:"k1",nivel:"N1",emoji:"📖",title:"Leia a Aula Completa",desc:"Leia todas as aulas sem pular nada. Cada frase tem um motivo.",regra:"Não avance sem ler tudo.",color:"#E8773A"},
+{id:"k2",nivel:"N2",emoji:"✏️",title:"Copie as Fórmulas à Mão",desc:"Escreva cada fórmula em papel com caneta. Não é preguiça — é neurociência.",regra:"Escrever à mão ativa o cérebro.",color:"#D4692A"},
+{id:"k3",nivel:"N3",emoji:"🔁",title:"Refaça os Exemplos",desc:"Resolva os exemplos com números diferentes dos que aparecem no curso.",regra:"Invente seus próprios números.",color:"#C45E25"},
+{id:"k4",nivel:"N4",emoji:"📝",title:"Faça os Exercícios",desc:"Responda todos os exercícios do módulo sem consultar as aulas.",regra:"Só avança quem acerta os três.",color:"#B85520"},
+{id:"k5",nivel:"N5",emoji:"🎯",title:"Aplique no Trabalho Real",desc:"Use o conceito com um número real do seu dia a dia.",regra:"Aprendizado completo = vida real.",color:"#E8773A"},
+{id:"k6",nivel:"N6",emoji:"🌙",title:"Revisão Noturna",desc:"Antes de dormir, releia as fórmulas do módulo. 5 minutos.",regra:"O cérebro consolida no sono.",color:"#D4692A"},
+{id:"k7",nivel:"N7",emoji:"📅",title:"Repita por 3 Dias",desc:"Estude o mesmo módulo por 3 dias seguidos antes de avançar.",regra:"Repetição cria memória permanente.",color:"#C45E25"},
+{id:"k8",nivel:"N8",emoji:"🔄",title:"Revisão Semanal",desc:"Todo domingo, releia as fórmulas de todos os módulos concluídos.",regra:"Kumon revisa sempre.",color:"#B85520"},
+{id:"k9",nivel:"N9",emoji:"🏆",title:"Avance Só com 100%",desc:"Quiz + verdadeiro/falso + cálculo + exemplo real. Sem exceção.",regra:"80% não é suficiente.",color:"#8B3A1A"}
+];
+
+const DAILY=[
+{id:"d1",label:"Li a aula completa de hoje"},
+{id:"d2",label:"Escrevi as fórmulas à mão"},
+{id:"d3",label:"Refiz um exemplo com números meus"},
+{id:"d4",label:"Fiz todos os exercícios"},
+{id:"d5",label:"Apliquei no trabalho real"}
+];
+
+function loadStorage(key,fallback){try{const v=localStorage.getItem(key);return v?JSON.parse(v):fallback;}catch{return fallback;}}
+function saveStorage(key,val){try{localStorage.setItem(key,JSON.stringify(val));}catch{}}
+
+function ExercisePanel({mod,onClose}){
+  const [step,setStep]=useState(0);
+  const [results,setResults]=useState([null,null,null]);
+  const [calcInput,setCalcInput]=useState("");
+  const [answered,setAnswered]=useState([false,false,false]);
+  const ex=mod.exercises;
+
+  const handleQuiz=(optIdx)=>{
+    if(answered[step])return;
+    const correct=optIdx===ex[step].correct;
+    const nr=[...results];nr[step]=correct;setResults(nr);
+    const na=[...answered];na[step]=true;setAnswered(na);
+  };
+
+  const handleTF=(ans)=>{
+    if(answered[step])return;
+    const correct=ans===ex[step].correct;
+    const nr=[...results];nr[step]=correct;setResults(nr);
+    const na=[...answered];na[step]=true;setAnswered(na);
+  };
+
+  const handleCalc=()=>{
+    if(answered[step])return;
+    const val=parseFloat(calcInput.replace(",","."));
+    const correct=Math.abs(val-ex[step].answer)<=ex[step].tolerance;
+    const nr=[...results];nr[step]=correct;setResults(nr);
+    const na=[...answered];na[step]=true;setAnswered(na);
+  };
+
+  const allDone=answered.every(Boolean);
+  const allCorrect=results.every(r=>r===true);
+  const cur=ex[step];
+
+  return(
+    <div style={{background:"#FFF",borderRadius:13,margin:"14px",padding:20,boxShadow:"0 4px 16px rgba(0,0,0,0.1)"}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+        <h3 style={{fontSize:15,fontWeight:800,color:"#1A1A1A"}}>📝 Exercícios — {mod.title}</h3>
+        <div style={{display:"flex",gap:6}}>
+          {ex.map((_,i)=><span key={i} style={{width:10,height:10,borderRadius:"50%",background:results[i]===true?"#2D7A4F":results[i]===false?"#E84545":i===step?"#E8773A":"#DDD",display:"inline-block"}}/>)}
+        </div>
+      </div>
+
+      <div style={{display:"flex",gap:8,marginBottom:14}}>
+        {ex.map((_,i)=><button key={i} onClick={()=>setStep(i)} style={{padding:"4px 12px",borderRadius:8,fontSize:11,fontWeight:700,cursor:"pointer",border:"2px solid "+(i===step?mod.color:"#DDD"),background:i===step?mod.color:"#FFF",color:i===step?"#FFF":"#888"}}>
+          {results[i]===true?"✅":results[i]===false?"❌":i===0?"Quiz":i===1?"V ou F":"Cálculo"}
+        </button>)}
+      </div>
+
+      {cur.type==="quiz"&&<div>
+        <div style={{background:"#F9F5F1",borderRadius:10,padding:14,marginBottom:14}}>
+          <p style={{fontSize:14,fontWeight:700,color:"#1A1A1A",lineHeight:1.5}}>{cur.question}</p>
+        </div>
+        <div style={{display:"flex",flexDirection:"column",gap:8}}>
+          {cur.options.map((opt,i)=>{
+            let bg="#F8F4F0",brd="#DDD",col="#333";
+            if(answered[step]){if(i===cur.correct){bg="#EDFAF3";brd="#2D7A4F";col="#2D7A4F";}else if(i===(results[step]===false?cur.options.findIndex((_,j)=>j!==cur.correct&&answered[step]):null)){bg="#FFF0F0";brd="#E84545";}}
+            return<button key={i} onClick={()=>handleQuiz(i)} style={{border:"2px solid "+brd,background:bg,borderRadius:10,padding:"10px 14px",fontSize:13,textAlign:"left",cursor:answered[step]?"default":"pointer",fontFamily:"Georgia,serif",color:col,width:"100%"}}>
+              <b style={{color:"#AAA",marginRight:8}}>{["A","B","C","D"][i]}</b>{opt}
+            </button>;
+          })}
+        </div>
+        {answered[step]&&<div style={{marginTop:14,padding:14,borderRadius:10,background:results[step]?"#EDFAF3":"#FFF0F0",border:"2px solid "+(results[step]?"#2D7A4F":"#E84545")}}>
+          <span style={{fontSize:18,marginRight:8}}>{results[step]?"🎉":"🔁"}</span>
+          <span style={{fontWeight:700,color:results[step]?"#2D7A4F":"#E84545"}}>{results[step]?"Correto!":"Errou."}</span>
+          <p style={{fontSize:12,color:"#444",marginTop:6,lineHeight:1.6}}>{cur.explanation}</p>
+        </div>}
+      </div>}
+
+      {cur.type==="truefalse"&&<div>
+        <div style={{background:"#F9F5F1",borderRadius:10,padding:14,marginBottom:14}}>
+          <p style={{fontSize:13,fontWeight:700,color:"#555",marginBottom:6}}>VERDADEIRO OU FALSO?</p>
+          <p style={{fontSize:14,color:"#1A1A1A",lineHeight:1.6,fontStyle:"italic"}}>"{cur.statement}"</p>
+        </div>
+        <div style={{display:"flex",gap:12}}>
+          {[{label:"✅ Verdadeiro",val:true,color:"#2D7A4F"},{label:"❌ Falso",val:false,color:"#E84545"}].map(btn=>{
+            let bg="#FFF",brd="#DDD";
+            if(answered[step]&&btn.val===cur.correct){bg=btn.val?"#EDFAF3":"#FFF0F0";brd=btn.color;}
+            return<button key={btn.label} onClick={()=>handleTF(btn.val)} style={{flex:1,padding:"14px",borderRadius:12,fontSize:13,fontWeight:700,cursor:answered[step]?"default":"pointer",border:"2px solid "+brd,background:bg,color:btn.color,fontFamily:"Georgia,serif"}}>
+              {btn.label}
+            </button>;
+          })}
+        </div>
+        {answered[step]&&<div style={{marginTop:14,padding:14,borderRadius:10,background:results[step]?"#EDFAF3":"#FFF0F0",border:"2px solid "+(results[step]?"#2D7A4F":"#E84545")}}>
+          <span style={{fontSize:18,marginRight:8}}>{results[step]?"🎉":"🔁"}</span>
+          <span style={{fontWeight:700,color:results[step]?"#2D7A4F":"#E84545"}}>{results[step]?"Correto!":"Errou — leia a explicação."}</span>
+          <p style={{fontSize:12,color:"#444",marginTop:6,lineHeight:1.6}}>{cur.explanation}</p>
+        </div>}
+      </div>}
+
+      {cur.type==="calc"&&<div>
+        <div style={{background:"#F9F5F1",borderRadius:10,padding:14,marginBottom:14}}>
+          <p style={{fontSize:14,fontWeight:700,color:"#1A1A1A",lineHeight:1.5,marginBottom:8}}>{cur.question}</p>
+          <p style={{fontSize:11,color:"#E8773A",fontWeight:700}}>💡 {cur.hint}</p>
+        </div>
+        <div style={{display:"flex",gap:10,alignItems:"center",marginBottom:14}}>
+          <input type="number" value={calcInput} onChange={e=>setCalcInput(e.target.value)} disabled={answered[step]}
+            placeholder="Digite sua resposta..." style={{flex:1,padding:"12px 14px",borderRadius:10,border:"2px solid #DDD",fontSize:15,fontFamily:"Georgia,serif",background:answered[step]?"#F5F5F5":"#FFF"}}/>
+          {!answered[step]&&<button onClick={handleCalc} style={{background:"#E8773A",color:"#FFF",border:"none",borderRadius:10,padding:"12px 20px",fontSize:13,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap"}}>Confirmar</button>}
+        </div>
+        {answered[step]&&<div style={{padding:14,borderRadius:10,background:results[step]?"#EDFAF3":"#FFF0F0",border:"2px solid "+(results[step]?"#2D7A4F":"#E84545")}}>
+          <span style={{fontSize:18,marginRight:8}}>{results[step]?"🎉":"🔁"}</span>
+          <span style={{fontWeight:700,color:results[step]?"#2D7A4F":"#E84545"}}>{results[step]?"Cálculo correto!":"Não foi dessa vez."}</span>
+          <p style={{fontSize:12,color:"#444",marginTop:6,lineHeight:1.6}}>{cur.explanation}</p>
+        </div>}
+      </div>}
+
+      {step<2&&answered[step]&&<button onClick={()=>setStep(step+1)} style={{marginTop:14,background:mod.color,color:"#FFF",border:"none",borderRadius:10,padding:"10px 20px",fontSize:12,fontWeight:700,cursor:"pointer",width:"100%"}}>Próximo exercício →</button>}
+
+      {allDone&&<div style={{marginTop:16,padding:16,borderRadius:12,background:"linear-gradient(135deg,#1A1A1A,#333)",textAlign:"center"}}>
+        <div style={{fontSize:28,marginBottom:6}}>{allCorrect?"🏆":"💪"}</div>
+        <div style={{fontWeight:800,color:"#FFF",fontSize:14}}>
+          {allCorrect?"Perfeito! Você dominou os exercícios.":"Continue praticando — releia as explicações."}
+        </div>
+        <div style={{fontSize:12,color:"#CCC",marginTop:4}}>{results.filter(r=>r).length}/3 corretos</div>
+        {allCorrect&&<button onClick={onClose} style={{marginTop:12,background:"#2D7A4F",color:"#FFF",border:"none",borderRadius:10,padding:"10px 20px",fontSize:12,fontWeight:700,cursor:"pointer"}}>✅ Módulo concluído!</button>}
+      </div>}
+    </div>
+  );
+}
+
+function LessonView({mod,onBack,onComplete,onShowExercises}){
+  const [li,setLi]=useState(0);
+  const lesson=mod.lessons[li];
+  return(
+    <div style={{minHeight:"100vh",background:"#F2EDE8",fontFamily:"Georgia,serif"}}>
+      <div style={{background:"#1A1A1A",padding:"14px 18px",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12,flexWrap:"wrap"}}>
+        <button onClick={onBack} style={{background:"none",border:"1px solid #555",color:"#CCC",padding:"6px 12px",borderRadius:8,cursor:"pointer",fontSize:12}}>← Voltar</button>
+        <div style={{display:"flex",alignItems:"center",gap:10}}>
+          <span style={{fontSize:24}}>{mod.emoji}</span>
+          <div>
+            <div style={{fontWeight:800,fontSize:14,color:"#FFF"}}>{mod.title} — {mod.subtitle}</div>
+            <div style={{fontSize:10,color:"#E8773A"}}>{mod.desc}</div>
+          </div>
+        </div>
+        <button onClick={onComplete} style={{background:"#2D7A4F",color:"#FFF",border:"none",borderRadius:8,padding:"6px 12px",fontSize:11,fontWeight:700,cursor:"pointer"}}>✅ Concluir</button>
+      </div>
+
+      <div style={{display:"flex",gap:7,padding:"10px 14px",overflowX:"auto",background:"#FFF",borderBottom:"1px solid #E8E0D8"}}>
+        {mod.lessons.map((_,i)=><button key={i} onClick={()=>setLi(i)} style={{border:"2px solid "+mod.color,borderRadius:8,padding:"5px 14px",fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",background:li===i?mod.color:"#FFF",color:li===i?"#FFF":"#666"}}>Aula {i+1}</button>)}
+        <button onClick={onShowExercises} style={{border:"2px solid #2D7A4F",borderRadius:8,padding:"5px 14px",fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",background:"#FFF",color:"#2D7A4F"}}>📝 Exercícios</button>
+      </div>
+
+      <div style={{background:"#FFF",borderRadius:13,margin:"14px",padding:20,boxShadow:"0 4px 16px rgba(0,0,0,0.08)"}}>
+        <h2 style={{margin:"0 0 12px",fontSize:16,fontWeight:800,color:mod.color}}>{lesson.title}</h2>
+        <div style={{background:"#F9F5F1",borderRadius:10,padding:16}}>
+          {lesson.content.split("\n").map((ln,i)=><p key={i} style={{margin:"3px 0",fontSize:13,lineHeight:1.8,color:ln.match(/^[A-ZÁÉÍÓÚ].*:$/)?"#B85520":"#333",fontWeight:ln.match(/^[A-ZÁÉÍÓÚ].*:$/)?"700":"400",fontFamily:"monospace"}}>{ln||" "}</p>)}
+        </div>
+        <div style={{display:"flex",gap:10,marginTop:14}}>
+          {li>0&&<button onClick={()=>setLi(li-1)} style={{background:"#F0EBE5",border:"none",borderRadius:9,padding:"8px 16px",fontSize:12,fontWeight:700,cursor:"pointer",color:"#555"}}>← Anterior</button>}
+          {li<mod.lessons.length-1?<button onClick={()=>setLi(li+1)} style={{background:mod.color,color:"#FFF",border:"none",borderRadius:9,padding:"8px 16px",fontSize:12,fontWeight:700,cursor:"pointer",marginLeft:"auto"}}>Próxima →</button>
+          :<button onClick={onShowExercises} style={{background:"#2D7A4F",color:"#FFF",border:"none",borderRadius:9,padding:"8px 16px",fontSize:12,fontWeight:700,cursor:"pointer",marginLeft:"auto"}}>📝 Ir para exercícios →</button>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App(){
-  const[tab,setTab]=useState("k");
-  const[mSt,setMSt]=useState(()=>Object.fromEntries(MODULES.map(m=>[m.id,ST.B])));
-  const[sSt,setSSt]=useState(()=>Object.fromEntries(KUMON_STEPS.map(s=>[s.id,ST.B])));
-  const[act,setAct]=useState(null);
-  const[li,setLi]=useState(0);
-  const[qa,setQa]=useState(null);
-  const[dc,setDc]=useState(()=>Object.fromEntries(DAILY.map(t=>[t.id,false])));
-  const[streak,setStreak]=useState(0);
+  const [tab,setTab]=useState("k");
+  const [view,setView]=useState("list"); // list | lesson | exercises
+  const [act,setAct]=useState(null);
+  const [mSt,setMStRaw]=useState(()=>loadStorage("cfin_mod",Object.fromEntries(MODULES.map(m=>[m.id,ST.B]))));
+  const [sSt,setSStRaw]=useState(()=>loadStorage("cfin_step",Object.fromEntries(KUMON_STEPS.map(s=>[s.id,ST.B]))));
+  const [dc,setDcRaw]=useState(()=>loadStorage("cfin_daily",Object.fromEntries(DAILY.map(t=>[t.id,false]))));
+  const [streak,setStreakRaw]=useState(()=>loadStorage("cfin_streak",0));
+
+  const setMSt=(fn)=>{const nv=typeof fn==="function"?fn(mSt):fn;setMStRaw(nv);saveStorage("cfin_mod",nv);};
+  const setSSt=(fn)=>{const nv=typeof fn==="function"?fn(sSt):fn;setSStRaw(nv);saveStorage("cfin_step",nv);};
+  const setDc=(fn)=>{const nv=typeof fn==="function"?fn(dc):fn;setDcRaw(nv);saveStorage("cfin_daily",nv);};
+  const setStreak=(fn)=>{const nv=typeof fn==="function"?fn(streak):fn;setStreakRaw(nv);saveStorage("cfin_streak",nv);};
+
   const done=Object.values(mSt).filter(s=>s===ST.X).length;
   const prog=Math.round((done/MODULES.length)*100);
   const dd=Object.values(dc).filter(Boolean).length;
   const gM={[ST.B]:MODULES.filter(m=>mSt[m.id]===ST.B),[ST.D]:MODULES.filter(m=>mSt[m.id]===ST.D),[ST.X]:MODULES.filter(m=>mSt[m.id]===ST.X)};
   const gS={[ST.B]:KUMON_STEPS.filter(s=>sSt[s.id]===ST.B),[ST.D]:KUMON_STEPS.filter(s=>sSt[s.id]===ST.D),[ST.X]:KUMON_STEPS.filter(s=>sSt[s.id]===ST.X)};
-  const tog=(id)=>{const n={...dc,[id]:!dc[id]};setDc(n);if(Object.values(n).every(Boolean))setStreak(s=>s+1);};
-  const open=(mod)=>{setAct(mod);setLi(0);setQa(null);setTab("c");};
-  if(tab==="c"&&act){
-    const mod=act,inQ=li===mod.lessons.length,lesson=!inQ?mod.lessons[li]:null,ans=qa!==null,ok=qa===mod.quiz.correct;
-    return(<div style={{minHeight:"100vh",background:"#F2EDE8",fontFamily:"Georgia,serif"}}>
+
+  const tog=(id)=>{
+    const n={...dc,[id]:!dc[id]};
+    setDc(n);
+    if(Object.values(n).every(Boolean))setStreak(s=>s+1);
+  };
+
+  if(view==="lesson"&&act) return<LessonView mod={act} onBack={()=>setView("list")} onComplete={()=>{setMSt(p=>({...p,[act.id]:ST.X}));setView("list");}} onShowExercises={()=>setView("exercises")}/>;
+  if(view==="exercises"&&act) return<div style={{minHeight:"100vh",background:"#F2EDE8",fontFamily:"Georgia,serif"}}>
+    <div style={{background:"#1A1A1A",padding:"14px 18px",display:"flex",alignItems:"center",gap:12}}>
+      <button onClick={()=>setView("lesson")} style={{background:"none",border:"1px solid #555",color:"#CCC",padding:"6px 12px",borderRadius:8,cursor:"pointer",fontSize:12}}>← Voltar às Aulas</button>
+      <div style={{fontWeight:800,color:"#FFF",fontSize:14}}>{act.title} — Exercícios</div>
+    </div>
+    <ExercisePanel mod={act} onClose={()=>{setMSt(p=>({...p,[act.id]:ST.X}));setView("list");}}/>
+  </div>;
+
+  return(
+    <div style={{minHeight:"100vh",background:"#F2EDE8",fontFamily:"Georgia,serif"}}>
       <div style={{background:"#1A1A1A",padding:"14px 18px",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12,flexWrap:"wrap"}}>
-        <button onClick={()=>setTab("k")} style={{background:"none",border:"1px solid #555",color:"#CCC",padding:"6px 12px",borderRadius:8,cursor:"pointer",fontSize:12}}>← Voltar</button>
-        <div style={{display:"flex",alignItems:"center",gap:10}}><span style={{fontSize:24}}>{mod.emoji}</span><div><div style={{fontWeight:800,fontSize:14,color:"#FFF"}}>{mod.title} — {mod.subtitle}</div><div style={{fontSize:10,color:"#E8773A"}}>{mod.desc}</div></div></div>
-        <div style={{display:"flex",gap:8}}>
-          {mSt[mod.id]!==ST.D&&mSt[mod.id]!==ST.X&&<button onClick={()=>setMSt(p=>({...p,[mod.id]:ST.D}))} style={{background:"#E8773A",color:"#FFF",border:"none",borderRadius:8,padding:"6px 12px",fontSize:11,fontWeight:700,cursor:"pointer"}}>🚀 Iniciar</button>}
-          {mSt[mod.id]!==ST.X&&<button onClick={()=>{setMSt(p=>({...p,[mod.id]:ST.X}));setTab("k");}} style={{background:"#2D7A4F",color:"#FFF",border:"none",borderRadius:8,padding:"6px 12px",fontSize:11,fontWeight:700,cursor:"pointer"}}>✅ Concluir</button>}
+        <div>
+          <h1 style={{margin:0,fontSize:18,fontWeight:800,color:"#FFF"}}>📊 Análise Financeira para Negócios</h1>
+          <div style={{fontSize:10,color:"#E8773A",marginTop:2}}>Método Japonês · {MODULES.length} módulos · Progresso salvo automaticamente</div>
+        </div>
+        <div>
+          <div style={{fontSize:10,color:"#CCC",marginBottom:4}}>{prog}% · {done}/{MODULES.length} módulos concluídos</div>
+          <div style={{height:7,background:"#444",borderRadius:99,width:170,overflow:"hidden"}}>
+            <div style={{height:"100%",background:"linear-gradient(90deg,#E8773A,#FFB347)",width:prog+"%",borderRadius:99,transition:"width 0.5s"}}/>
+          </div>
         </div>
       </div>
-      <div style={{background:"#FFF9F2",borderBottom:"2px solid #E8773A",padding:"8px 16px",fontSize:11,color:"#B85520",fontWeight:600}}>🇯🇵 Kumon: leia → escreva à mão → refaça → quiz sem consultar → aplique</div>
-      <div style={{display:"flex",gap:7,padding:"10px 14px",overflowX:"auto",background:"#FFF",borderBottom:"1px solid #E8E0D8"}}>
-        {mod.lessons.map((_,i)=>(<button key={i} onClick={()=>{setLi(i);setQa(null);}} style={{border:"2px solid "+mod.color,borderRadius:8,padding:"5px 14px",fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",background:li===i?mod.color:"#FFF",color:li===i?"#FFF":"#666"}}>Aula {i+1}</button>))}
-        <button onClick={()=>setLi(mod.lessons.length)} style={{border:"2px solid #2D7A4F",borderRadius:8,padding:"5px 14px",fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",background:inQ?"#2D7A4F":"#FFF",color:inQ?"#FFF":"#666"}}>📝 Quiz</button>
+
+      <div style={{display:"flex",gap:8,padding:"12px 14px",background:"#FFF",borderBottom:"1px solid #E8E0D8"}}>
+        <button onClick={()=>setTab("k")} style={{padding:"7px 13px",borderRadius:9,fontSize:11,fontWeight:700,cursor:"pointer",background:tab==="k"?"#E8773A":"transparent",color:tab==="k"?"#FFF":"#888",border:tab==="k"?"none":"1px solid #DDD"}}>📋 Módulos</button>
+        <button onClick={()=>setTab("km")} style={{padding:"7px 13px",borderRadius:9,fontSize:11,fontWeight:700,cursor:"pointer",background:tab==="km"?"#C45E25":"#FFF3EC",color:tab==="km"?"#FFF":"#C45E25",border:tab==="km"?"none":"2px solid #E8773A"}}>🇯🇵 Método</button>
       </div>
-      <div style={{background:"#FFF",borderRadius:13,margin:"14px",padding:20,boxShadow:"0 4px 16px rgba(0,0,0,0.08)"}}>
-        {!inQ?(<div>
-          <h2 style={{margin:"0 0 12px",fontSize:16,fontWeight:800,color:mod.color}}>{lesson.title}</h2>
-          <div style={{background:"#F9F5F1",borderRadius:10,padding:14}}>{lesson.content.split("\n").map((ln,i)=>(<p key={i} style={{margin:"3px 0",fontSize:13,lineHeight:1.7,color:"#333",fontFamily:"monospace"}}>{ln||" "}</p>))}</div>
-          <div style={{marginTop:16,background:"#FFF9F2",borderRadius:10,padding:12,border:"1px solid #F0D9C0"}}>
-            <div style={{fontSize:11,fontWeight:800,color:"#B85520",marginBottom:8}}>🇯🇵 Ficha Kumon:</div>
-            {DAILY.map(t=>(<label key={t.id} style={{display:"flex",alignItems:"center",gap:8,marginBottom:6,cursor:"pointer"}}><input type="checkbox" checked={!!dc[t.id]} onChange={()=>tog(t.id)} style={{width:15,height:15}}/><span style={{fontSize:12,color:dc[t.id]?"#2D7A4F":"#555",textDecoration:dc[t.id]?"line-through":"none"}}>{t.label}</span></label>))}
-          </div>
-          <div style={{display:"flex",gap:10,marginTop:14}}>
-            {li>0&&<button onClick={()=>setLi(li-1)} style={{background:"#F0EBE5",border:"none",borderRadius:9,padding:"8px 16px",fontSize:12,fontWeight:700,cursor:"pointer",color:"#555"}}>← Anterior</button>}
-            <button onClick={()=>setLi(li+1)} style={{background:mod.color,color:"#FFF",border:"none",borderRadius:9,padding:"8px 16px",fontSize:12,fontWeight:700,cursor:"pointer",marginLeft:"auto"}}>{li===mod.lessons.length-1?"Ir para o Quiz →":"Próxima →"}</button>
-          </div>
-        </div>):(<div>
-          <h2 style={{margin:"0 0 10px",fontSize:16,fontWeight:800,color:"#2D7A4F"}}>📝 Quiz</h2>
-          <p style={{fontSize:15,fontWeight:700,color:"#1A1A1A",marginBottom:14}}>{mod.quiz.question}</p>
-          <div style={{display:"flex",flexDirection:"column",gap:8}}>
-            {mod.quiz.options.map((opt,i)=>{let bg="#F8F4F0",brd="#DDD";if(ans){if(i===mod.quiz.correct){bg="#EDFAF3";brd="#2D7A4F"}else if(i===qa){bg="#FFF0F0";brd="#E84545"}}return<button key={i} onClick={()=>!ans&&setQa(i)} style={{border:"2px solid "+brd,background:bg,borderRadius:10,padding:"11px 14px",fontSize:13,textAlign:"left",cursor:ans?"default":"pointer",fontFamily:"Georgia,serif",width:"100%"}}><b style={{color:"#888",marginRight:10}}>{["A","B","C","D"][i]}</b>{opt}</button>;})}
-          </div>
-          {ans&&<div style={{display:"flex",gap:12,alignItems:"flex-start",border:"2px solid "+(ok?"#2D7A4F":"#E84545"),background:ok?"#EDFAF3":"#FFF0F0",borderRadius:12,padding:14,marginTop:14}}><span style={{fontSize:22}}>{ok?"🎉":"🔁"}</span><div><div style={{fontWeight:700,color:ok?"#2D7A4F":"#E84545"}}>{ok?"Correto! Pode avançar.":"Errou — releia a aula."}</div><div style={{fontSize:13,color:"#444",marginTop:3}}>{mod.quiz.explanation}</div></div></div>}
-          {ans&&ok&&<button onClick={()=>{setMSt(p=>({...p,[mod.id]:ST.X}));setTab("k");}} style={{background:"#2D7A4F",color:"#FFF",border:"none",borderRadius:9,padding:"10px 16px",fontSize:12,fontWeight:700,cursor:"pointer",marginTop:14,width:"100%"}}>✅ Concluído — Avançar</button>}
-          {ans&&!ok&&<button onClick={()=>{setLi(0);setQa(null);}} style={{background:"#E8773A",color:"#FFF",border:"none",borderRadius:9,padding:"10px 16px",fontSize:12,fontWeight:700,cursor:"pointer",marginTop:14,width:"100%"}}>🔁 Voltar para Aula 1</button>}
-        </div>)}
-      </div>
-    </div>);
-  }
-  return(<div style={{minHeight:"100vh",background:"#F2EDE8",fontFamily:"Georgia,serif"}}>
-    <div style={{background:"#1A1A1A",padding:"14px 18px",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12,flexWrap:"wrap"}}>
-      <div><h1 style={{margin:0,fontSize:18,fontWeight:800,color:"#FFF"}}>📊 Análise Financeira para Negócios</h1><div style={{fontSize:10,color:"#E8773A",marginTop:2}}>Método Kumon · {MODULES.length} módulos · +5.000 alunos</div></div>
-      <div><div style={{fontSize:10,color:"#CCC",marginBottom:4}}>{prog}% · {done}/{MODULES.length} módulos</div><div style={{height:7,background:"#444",borderRadius:99,width:170,overflow:"hidden"}}><div style={{height:"100%",background:"linear-gradient(90deg,#E8773A,#FFB347)",width:prog+"%",borderRadius:99,transition:"width 0.5s"}}/></div></div>
-    </div>
-    <div style={{display:"flex",gap:8,padding:"12px 14px",background:"#FFF",borderBottom:"1px solid #E8E0D8"}}>
-      <button onClick={()=>setTab("k")} style={{padding:"7px 13px",borderRadius:9,fontSize:11,fontWeight:700,cursor:"pointer",background:tab==="k"?"#E8773A":"transparent",color:tab==="k"?"#FFF":"#888",border:tab==="k"?"none":"1px solid #DDD"}}>📋 Módulos</button>
-      <span className={tab!=="km"?"kumon-tab-wrap":""}><button onClick={()=>setTab("km")} style={{padding:"7px 13px",borderRadius:9,fontSize:11,fontWeight:700,cursor:"pointer",background:tab==="km"?"#C45E25":"#FFF3EC",color:tab==="km"?"#FFF":"#C45E25",border:tab==="km"?"none":"2px solid #E8773A"}}>{tab!=="km"&&<span className="kumon-arrow">➜</span>}🇯🇵 Método Kumon</button></span>
-    </div>
-    {tab==="k"&&<div><div style={{display:"flex",gap:10,padding:"12px 10px",overflowX:"auto",alignItems:"flex-start"}}>
-      {cols.map(col=>(<div key={col.key} style={{minWidth:250,maxWidth:290,flex:"1 1 250px",borderRadius:13,padding:10,background:col.bg}}>
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}><span style={{color:col.color,fontWeight:800,fontSize:12}}>{col.label}</span><span style={{background:col.cnt,color:"#FFF",fontSize:10,fontWeight:800,padding:"2px 7px",borderRadius:99}}>{gM[col.key].length}</span></div>
-        <div style={{display:"flex",flexDirection:"column",gap:9}}>
-          {gM[col.key].length===0&&<div style={{textAlign:"center",color:"#CCC",fontSize:11,padding:"16px 0"}}>Vazio</div>}
-          {gM[col.key].map(mod=>(<div key={mod.id} style={{background:"#FFF",borderRadius:11,padding:11,boxShadow:"0 2px 8px rgba(0,0,0,0.06)",border:"1px solid #EEE"}}>
-            <div style={{display:"flex",gap:9,alignItems:"center",marginBottom:7}}><span style={{width:32,height:32,background:mod.color,borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,flexShrink:0}}>{mod.emoji}</span><div style={{flex:1}}><div style={{fontWeight:800,fontSize:11,color:"#1A1A1A"}}>{mod.title}</div><div style={{fontSize:10,color:mod.color,fontWeight:700}}>{mod.subtitle}</div></div>{mod.isBonus&&<span style={{background:"#6B4C9A",color:"#FFF",fontSize:8,fontWeight:800,padding:"2px 5px",borderRadius:99}}>BÔNUS</span>}</div>
-            <p style={{fontSize:10,color:"#666",margin:"0 0 9px",lineHeight:1.5}}>{mod.desc}</p>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <button onClick={()=>open(mod)} style={{background:mod.color,color:"#FFF",border:"none",borderRadius:7,padding:"4px 10px",fontSize:10,fontWeight:700,cursor:"pointer"}}>{mSt[mod.id]===ST.X?"Revisar":"Estudar"}</button>
-              <div style={{display:"flex",gap:3}}>
-                {mSt[mod.id]!==ST.D&&mSt[mod.id]!==ST.X&&<button onClick={()=>setMSt(p=>({...p,[mod.id]:ST.D}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>🚀</button>}
-                {mSt[mod.id]!==ST.X&&<button onClick={()=>setMSt(p=>({...p,[mod.id]:ST.X}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>✅</button>}
-                {mSt[mod.id]!==ST.B&&<button onClick={()=>setMSt(p=>({...p,[mod.id]:ST.B}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>↩️</button>}
+
+      {tab==="k"&&<div>
+        <div style={{display:"flex",gap:10,padding:"12px 10px",overflowX:"auto",alignItems:"flex-start"}}>
+          {cols.map(col=>(
+            <div key={col.key} style={{minWidth:260,maxWidth:300,flex:"1 1 260px",borderRadius:13,padding:10,background:col.bg}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+                <span style={{color:col.color,fontWeight:800,fontSize:12}}>{col.label}</span>
+                <span style={{background:col.color,color:"#FFF",fontSize:10,fontWeight:800,padding:"2px 7px",borderRadius:99}}>{gM[col.key].length}</span>
+              </div>
+              <div style={{display:"flex",flexDirection:"column",gap:9}}>
+                {gM[col.key].length===0&&<div style={{textAlign:"center",color:"#CCC",fontSize:11,padding:"16px 0"}}>Vazio</div>}
+                {gM[col.key].map(mod=>(
+                  <div key={mod.id} style={{background:"#FFF",borderRadius:11,padding:11,boxShadow:"0 2px 8px rgba(0,0,0,0.06)",border:"1px solid #EEE"}}>
+                    <div style={{display:"flex",gap:9,alignItems:"center",marginBottom:7}}>
+                      <span style={{width:32,height:32,background:mod.color,borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,flexShrink:0}}>{mod.emoji}</span>
+                      <div style={{flex:1}}>
+                        <div style={{fontWeight:800,fontSize:11,color:"#1A1A1A"}}>{mod.title}</div>
+                        <div style={{fontSize:10,color:mod.color,fontWeight:700}}>{mod.subtitle}</div>
+                      </div>
+                      {mod.isBonus&&<span style={{background:"#6B4C9A",color:"#FFF",fontSize:8,fontWeight:800,padding:"2px 5px",borderRadius:99}}>BÔNUS</span>}
+                    </div>
+                    <p style={{fontSize:10,color:"#666",margin:"0 0 9px",lineHeight:1.5}}>{mod.desc}</p>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                      <button onClick={()=>{setAct(mod);setView("lesson");}} style={{background:mod.color,color:"#FFF",border:"none",borderRadius:7,padding:"5px 11px",fontSize:10,fontWeight:700,cursor:"pointer"}}>
+                        {mSt[mod.id]===ST.X?"Revisar":"Estudar"}
+                      </button>
+                      <div style={{display:"flex",gap:3}}>
+                        <button onClick={()=>{setAct(mod);setView("exercises");}} title="Exercícios" style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 6px",cursor:"pointer",fontSize:11}}>📝</button>
+                        {mSt[mod.id]!==ST.D&&mSt[mod.id]!==ST.X&&<button onClick={()=>setMSt(p=>({...p,[mod.id]:ST.D}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>🚀</button>}
+                        {mSt[mod.id]!==ST.X&&<button onClick={()=>setMSt(p=>({...p,[mod.id]:ST.X}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>✅</button>}
+                        {mSt[mod.id]!==ST.B&&<button onClick={()=>setMSt(p=>({...p,[mod.id]:ST.B}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>↩️</button>}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>))}
+          ))}
         </div>
-      </div>))}
-    </div>{prog===100&&<div style={{textAlign:"center",background:"linear-gradient(135deg,#E8773A,#FFB347)",color:"#FFF",padding:"14px",borderRadius:12,margin:"0 12px 20px",fontWeight:800,fontSize:15}}>🎉 Parabéns! Você completou todos os módulos!</div>}</div>}
-    {tab==="km"&&<div style={{paddingBottom:40}}>
-      <div style={{background:"linear-gradient(135deg,#7A2E0A,#C45E25)",padding:"22px 18px",textAlign:"center"}}><div style={{fontSize:28,marginBottom:6}}>🇯🇵</div><h2 style={{margin:"0 0 6px",fontSize:17,fontWeight:800,color:"#FFF"}}>Método Kumon para TDAH</h2><p style={{margin:"0 auto 12px",fontSize:12,color:"rgba(255,255,255,0.88)",lineHeight:1.7,maxWidth:460}}>Criado por Toru Kumon nos anos 50.<br/><b>Estude todo dia · Domine antes de avançar · Repita até fixar.</b></p></div>
-      <div style={{background:"#FFF",padding:"16px",borderBottom:"1px solid #EEE"}}>
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}><div><div style={{fontWeight:800,fontSize:14,color:"#1A1A1A"}}>📋 Ficha Diária</div></div><div style={{textAlign:"center"}}><div style={{fontSize:22,fontWeight:800,color:"#E8773A"}}>{streak}</div><div style={{fontSize:9,color:"#AAA",fontWeight:700}}>DIAS SEGUIDOS</div></div></div>
-        {DAILY.map(t=>(<label key={t.id} style={{display:"flex",alignItems:"center",gap:10,cursor:"pointer",background:dc[t.id]?"#EDFAF3":"#F9F5F1",borderRadius:8,padding:"8px 12px",border:"1px solid "+(dc[t.id]?"#2D7A4F":"#EEE"),marginBottom:6}}><input type="checkbox" checked={!!dc[t.id]} onChange={()=>tog(t.id)} style={{width:16,height:16,flexShrink:0}}/><span style={{fontSize:13,color:dc[t.id]?"#2D7A4F":"#444",fontWeight:dc[t.id]?700:400,textDecoration:dc[t.id]?"line-through":"none"}}>{t.label}</span>{dc[t.id]&&<span style={{marginLeft:"auto"}}>✅</span>}</label>))}
-        <div style={{marginTop:10,height:6,background:"#EEE",borderRadius:99,overflow:"hidden"}}><div style={{height:"100%",background:"linear-gradient(90deg,#E8773A,#2D7A4F)",width:((dd/DAILY.length)*100)+"%",borderRadius:99,transition:"width 0.4s"}}/></div>
-      </div>
-      <div style={{display:"flex",gap:10,padding:"8px 10px",overflowX:"auto",alignItems:"flex-start"}}>
-        {cols.map(col=>(<div key={col.key} style={{minWidth:250,maxWidth:290,flex:"1 1 250px",borderRadius:13,padding:10,background:col.bg}}>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}><span style={{color:col.color,fontWeight:800,fontSize:12}}>{col.label}</span><span style={{background:col.cnt,color:"#FFF",fontSize:10,fontWeight:800,padding:"2px 7px",borderRadius:99}}>{gS[col.key].length}</span></div>
-          <div style={{display:"flex",flexDirection:"column",gap:9}}>
-            {gS[col.key].length===0&&<div style={{textAlign:"center",color:"#CCC",fontSize:11,padding:"16px 0"}}>Vazio</div>}
-            {gS[col.key].map(step=>(<div key={step.id} style={{background:"#FFF",borderRadius:11,padding:11,boxShadow:"0 2px 8px rgba(0,0,0,0.06)",border:"1px solid #EEE"}}>
-              <div style={{display:"flex",gap:9,alignItems:"center",marginBottom:6}}><span style={{width:32,height:32,background:step.color,borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,flexShrink:0}}>{step.emoji}</span><div style={{flex:1}}><div style={{fontSize:8,fontWeight:800,color:"#AAA",letterSpacing:1}}>{step.nivel}</div><div style={{fontWeight:800,fontSize:11,color:"#1A1A1A"}}>{step.title}</div></div></div>
-              <p style={{fontSize:10,color:"#555",margin:"0 0 6px",lineHeight:1.5}}>{step.desc}</p>
-              <div style={{background:"#FFF9F2",borderRadius:7,padding:"6px 8px",marginBottom:8,fontSize:9,color:"#B85520",fontWeight:600}}>📌 {step.regra}</div>
-              <div style={{display:"flex",justifyContent:"flex-end",gap:3}}>
-                {sSt[step.id]!==ST.D&&sSt[step.id]!==ST.X&&<button onClick={()=>setSSt(p=>({...p,[step.id]:ST.D}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>🚀</button>}
-                {sSt[step.id]!==ST.X&&<button onClick={()=>setSSt(p=>({...p,[step.id]:ST.X}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>✅</button>}
-                {sSt[step.id]!==ST.B&&<button onClick={()=>setSSt(p=>({...p,[step.id]:ST.B}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>↩️</button>}
-              </div>
-            </div>))}
+        {prog===100&&<div style={{textAlign:"center",background:"linear-gradient(135deg,#E8773A,#FFB347)",color:"#FFF",padding:"16px",borderRadius:12,margin:"0 12px 20px",fontWeight:800,fontSize:15}}>🎉 Parabéns! Você completou o curso inteiro!</div>}
+      </div>}
+
+      {tab==="km"&&<div style={{paddingBottom:40}}>
+        <div style={{background:"linear-gradient(135deg,#7A2E0A,#C45E25)",padding:"22px 18px",textAlign:"center"}}>
+          <div style={{fontSize:28,marginBottom:6}}>🇯🇵</div>
+          <h2 style={{margin:"0 0 6px",fontSize:17,fontWeight:800,color:"#FFF"}}>Método Japonês de Aprendizado</h2>
+          <p style={{margin:"0 auto 12px",fontSize:12,color:"rgba(255,255,255,0.88)",lineHeight:1.7,maxWidth:460}}>Baseado no método Kumon: domine antes de avançar.<br/><b>Leia · Escreva · Refaça · Exercite · Aplique.</b></p>
+        </div>
+
+        <div style={{background:"#FFF",padding:"16px",borderBottom:"1px solid #EEE"}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+            <div style={{fontWeight:800,fontSize:14,color:"#1A1A1A"}}>📋 Ficha Diária</div>
+            <div style={{textAlign:"center"}}><div style={{fontSize:22,fontWeight:800,color:"#E8773A"}}>{streak}</div><div style={{fontSize:9,color:"#AAA",fontWeight:700}}>DIAS SEGUIDOS</div></div>
           </div>
-        </div>))}
-      </div>
-    </div>}
-  </div>);
+          {DAILY.map(t=>(
+            <label key={t.id} style={{display:"flex",alignItems:"center",gap:10,cursor:"pointer",background:dc[t.id]?"#EDFAF3":"#F9F5F1",borderRadius:8,padding:"8px 12px",border:"1px solid "+(dc[t.id]?"#2D7A4F":"#EEE"),marginBottom:6}}>
+              <input type="checkbox" checked={!!dc[t.id]} onChange={()=>tog(t.id)} style={{width:16,height:16,flexShrink:0}}/>
+              <span style={{fontSize:13,color:dc[t.id]?"#2D7A4F":"#444",fontWeight:dc[t.id]?700:400,textDecoration:dc[t.id]?"line-through":"none"}}>{t.label}</span>
+              {dc[t.id]&&<span style={{marginLeft:"auto"}}>✅</span>}
+            </label>
+          ))}
+          <div style={{marginTop:10,height:6,background:"#EEE",borderRadius:99,overflow:"hidden"}}>
+            <div style={{height:"100%",background:"linear-gradient(90deg,#E8773A,#2D7A4F)",width:((dd/DAILY.length)*100)+"%",borderRadius:99,transition:"width 0.4s"}}/>
+          </div>
+        </div>
+
+        <div style={{display:"flex",gap:10,padding:"8px 10px",overflowX:"auto",alignItems:"flex-start"}}>
+          {cols.map(col=>(
+            <div key={col.key} style={{minWidth:250,maxWidth:290,flex:"1 1 250px",borderRadius:13,padding:10,background:col.bg}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+                <span style={{color:col.color,fontWeight:800,fontSize:12}}>{col.label}</span>
+                <span style={{background:col.color,color:"#FFF",fontSize:10,fontWeight:800,padding:"2px 7px",borderRadius:99}}>{gS[col.key].length}</span>
+              </div>
+              <div style={{display:"flex",flexDirection:"column",gap:9}}>
+                {gS[col.key].length===0&&<div style={{textAlign:"center",color:"#CCC",fontSize:11,padding:"16px 0"}}>Vazio</div>}
+                {gS[col.key].map(step=>(
+                  <div key={step.id} style={{background:"#FFF",borderRadius:11,padding:11,boxShadow:"0 2px 8px rgba(0,0,0,0.06)",border:"1px solid #EEE"}}>
+                    <div style={{display:"flex",gap:9,alignItems:"center",marginBottom:6}}>
+                      <span style={{width:32,height:32,background:step.color,borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,flexShrink:0}}>{step.emoji}</span>
+                      <div style={{flex:1}}>
+                        <div style={{fontSize:8,fontWeight:800,color:"#AAA",letterSpacing:1}}>{step.nivel}</div>
+                        <div style={{fontWeight:800,fontSize:11,color:"#1A1A1A"}}>{step.title}</div>
+                      </div>
+                    </div>
+                    <p style={{fontSize:10,color:"#555",margin:"0 0 6px",lineHeight:1.5}}>{step.desc}</p>
+                    <div style={{background:"#FFF9F2",borderRadius:7,padding:"6px 8px",marginBottom:8,fontSize:9,color:"#B85520",fontWeight:600}}>📌 {step.regra}</div>
+                    <div style={{display:"flex",justifyContent:"flex-end",gap:3}}>
+                      {sSt[step.id]!==ST.D&&sSt[step.id]!==ST.X&&<button onClick={()=>setSSt(p=>({...p,[step.id]:ST.D}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>🚀</button>}
+                      {sSt[step.id]!==ST.X&&<button onClick={()=>setSSt(p=>({...p,[step.id]:ST.X}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>✅</button>}
+                      {sSt[step.id]!==ST.B&&<button onClick={()=>setSSt(p=>({...p,[step.id]:ST.B}))} style={{background:"none",border:"1px solid #EEE",borderRadius:5,padding:"2px 5px",cursor:"pointer",fontSize:12}}>↩️</button>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>}
+    </div>
+  );
 }
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
