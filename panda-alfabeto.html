@@ -426,7 +426,7 @@ function nextJL() {
 function checkJL(btn, chosen, correct) {
   if (btn.dataset.done) return; btn.dataset.done = '1';
   if (chosen === correct) {
-    btn.classList.add('correct'); G.jlScore++; G.stars++;
+    btn.classList.add('correct'); G.jlScore++; G.stars++; saveStars();
     document.getElementById('jl-stars').textContent = '⭐ ' + G.jlScore;
     feedback('✅'); say('Muito bem! ' + correct + ' de ' + G.jlWord.w + '!'); confetti();
     setTimeout(nextJL, 2200);
@@ -473,7 +473,7 @@ function addSyl(btn, syl) {
   if (syl === G.silWord.syl[next]) {
     G.silBuilt.push(syl); btn.classList.add('used'); renderSlots(); say(syl, 1);
     if (G.silBuilt.length === G.silWord.syl.length) {
-      G.silScore++; G.stars++;
+      G.silScore++; G.stars++; saveStars();
       document.getElementById('sil-stars').textContent = '⭐ ' + G.silScore;
       feedback('🎉'); say('Parabéns! ' + G.silWord.w + '!'); confetti();
       setTimeout(nextSil, 2500);
@@ -650,13 +650,13 @@ function flipMem(idx,el) {
     G.memLocked=true;
     const [a,b]=G.memFlipped;
     if(G.memCards[a.idx].pair===G.memCards[b.idx].pair) {
-      G.memMatched++; G.stars++;
+      G.memMatched++; G.stars++; saveStars();
       document.getElementById('mem-score').textContent=`✅ ${G.memMatched}/6`;
       setTimeout(()=>{
         [a,b].forEach(x=>{ x.el.classList.add('matched'); x.el.querySelector('.mcard2-back').classList.add('matched'); });
         feedback('🎉'); say('Par encontrado! '+MEM_PAIRS[G.memCards[a.idx].pair].w+'!'); confetti();
         G.memFlipped=[]; G.memLocked=false;
-        if(G.memMatched===6) { G.stars+=5; setTimeout(()=>celebrate('Você encontrou todos os pares!','🎊 Memória incrível!'),1000); }
+        if(G.memMatched===6) { G.stars+=5; saveStars(); setTimeout(()=>celebrate('Você encontrou todos os pares!','🎊 Memória incrível!'),1000); }
       },500);
     } else {
       setTimeout(()=>{ a.el.classList.remove('flipped'); b.el.classList.remove('flipped'); G.memFlipped=[]; G.memLocked=false; },1300);
@@ -700,9 +700,25 @@ function shuffle(a) {
 }
 
 // ══════════════════════════════════════
+// ESTRELAS — persiste durante o dia
+// ══════════════════════════════════════
+function saveStars() {
+  const today = new Date().toISOString().slice(0,10);
+  localStorage.setItem('panda_stars', JSON.stringify({date: today, stars: G.stars}));
+}
+function loadStars() {
+  try {
+    const data = JSON.parse(localStorage.getItem('panda_stars') || 'null');
+    const today = new Date().toISOString().slice(0,10);
+    if (data && data.date === today) G.stars = data.stars;
+  } catch(e) {}
+}
+
+// ══════════════════════════════════════
 // INIT
 // ══════════════════════════════════════
 window.addEventListener('load',()=>{
+  loadStars();
   showScreen('splash');
   setTimeout(()=>say('Olá! Eu sou o Panda! Vamos aprender juntos!'),800);
 });
